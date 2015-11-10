@@ -114,20 +114,18 @@ minetest.register_abm({ --apples die in November
 	end
 })
 
---minetest.register_abm({ --apples grow in spring
---	nodenames = {'default:leaves'},
---	interval = 1,
---	chance = 1,
---	action = function (pos, node, active_object_count, active_object_count_wider)
---	print 'Running Apple growing ABM.'
---		if mymonths.month == 'April' then
---			if node.name == 'default:leaves' then
---			local below = {x=pos.x, y=pos.y-1, z=pos.z}
---				print (below.name)
---				if below.name == 'air' then
---					minetest.set_node(pos,{name = 'default:apple'})
---					end
---				end
---			end
---		end
---})
+minetest.register_abm({ --apples grow in spring
+	nodenames = {'default:leaves'},
+	interval = 15,
+	chance = 20,
+	action = function (pos, node, active_object_count, active_object_count_wider)
+		if mymonths.month == 'June' or 'July' or 'August' then
+			local posbelow = {x=pos.x, y=pos.y-1, z=pos.z}
+			local below = minetest.get_node_or_nil(posbelow)
+			print(below.name)
+			if below.name == 'air' then
+				minetest.set_node(posbelow,{name = 'default:apple'})
+			end
+		end
+	end
+})
