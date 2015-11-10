@@ -65,7 +65,7 @@ minetest.register_abm({
 })
 --Makes Puddles when raining
 minetest.register_abm({
-	nodenames = {"group:leaves","default:dirt","default:dirt_with_grass"},
+	nodenames = {"default:dirt","default:dirt_with_grass"},
 	neighbors = {"default:air"},
 	interval = 10.0, 
 	chance = 5000,
