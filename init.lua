@@ -80,7 +80,7 @@ minetest.register_globalstep(function(dtime)
 			minetest.chat_send_all("The date is "..mymonths.month.." "..mymonths.day_counter)
 --Febuary
 		elseif mymonths.month_counter == 2 then
-			mymonths.month = "Febuary"
+			mymonths.month = "February"
 			mymonths.day_speed = t5
 			mymonths.night_speed = t1
 			minetest.chat_send_all("The date is "..mymonths.month.." "..mymonths.day_counter)
@@ -116,7 +116,7 @@ minetest.register_globalstep(function(dtime)
 			minetest.chat_send_all("The date is "..mymonths.month.." "..mymonths.day_counter)
 --Augest
 		elseif mymonths.month_counter == 8 then
-			mymonths.month = "Augest"
+			mymonths.month = "August"
 			mymonths.day_speed = t1
 			mymonths.night_speed = t5
 			minetest.chat_send_all("The date is "..mymonths.month.." "..mymonths.day_counter)

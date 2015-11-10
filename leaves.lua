@@ -98,6 +98,34 @@ minetest.register_abm({ --By April all trees should be back to normal
 	action = function (pos, node, active_object_count, active_object_count_wider)
 		if mymonths.month == 'April' then
 			minetest.swap_node(pos, {name = 'default:leaves'})
+			print 'replacing leaves'
+		end
+	end
+})
+
+minetest.register_abm({ --apples die in November
+	nodenames = {'default:apple'},
+	interval = 15,
+	chance = 10,
+	action = function (pos, node, active_object_count, active_object_count_wider)
+		if mymonths.month == 'November' then
+			minetest.set_node(pos,{name = 'air'})
+		end
+	end
+})
+
+minetest.register_abm({ --apples grow in spring
+	nodenames = {'default:leaves'},
+	interval = 15,
+	chance = 20,
+	action = function (pos, node, active_object_count, active_object_count_wider)
+		if mymonths.month == 'June' or 'July' or 'August' then
+			local posbelow = {x=pos.x, y=pos.y-1, z=pos.z}
+			local below = minetest.get_node_or_nil(posbelow)
+			print(below.name)
+			if below.name == 'air' then
+				minetest.set_node(posbelow,{name = 'default:apple'})
+			end
 		end
 	end
 })
