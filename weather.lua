@@ -14,7 +14,7 @@ minetest.register_globalstep(function(dtime)
 		local nodeu = minetest.get_node({x=ppos.x,y=ppos.y-1,z=ppos.z})
 		local biome_jungle = minetest.find_node_near(ppos, 5, "default:jungletree","default:junglegrass")
 		local biome_desert = minetest.find_node_near(ppos, 5, "default:desert_sand","default:desert_stone")
-		local biome_snow = minetest.find_node_near(ppos, 10, "default:snow","default:snowblock","default:dirt_with_snow","default:ice")
+		local biome_snow = minetest.find_node_near(ppos, 5, "default:snow","default:snowblock","default:dirt_with_snow","default:ice")
 		
 	
 		local minp = addvectors(ppos, {x=-7, y=7, z=-7})
@@ -33,17 +33,17 @@ minetest.register_globalstep(function(dtime)
 	if biome_jungle ~= nil and
 		mymonths.weather == "snow" then
 		mymonths.weather2 = "rain"
-	end
-
-	if biome_desert ~= nil and
-		mymonths.weather == "snow" or
+	elseif biome_desert ~= nil and
+		mymonths.weather == "snow" then
+		mymonths.weather2 = "none"
+	elseif biome_desert ~= nil and
 		mymonths.weather == "rain" then
 		mymonths.weather2 = "none"
-	end
-
-	if biome_snow ~= nil and
+	elseif biome_snow ~= nil and
 		mymonths.weather == "rain" then
 		mymonths.weather2 = "snow"
+	else
+		mymonths.weather2 = mymonths.weather
 	end
 	
 	if mymonths.weather2 == "rain" then
@@ -54,8 +54,9 @@ minetest.register_globalstep(function(dtime)
 			minexptime=0.6, maxexptime=0.8,
 			minsize=25, maxsize=25,
 			collisiondetection=false, vertical=true, texture="weather_rain.png", player:get_player_name()})
+	end
 			
-	elseif mymonths.weather2 == "snow" then
+	if mymonths.weather2 == "snow" then
 			minetest.add_particlespawner(4, 0.5,
 			minp, maxp,
 			vel_snow, vel_snow,
@@ -71,7 +72,9 @@ minetest.register_globalstep(function(dtime)
 			15, 25,
 			false, "weather_snow.png", player:get_player_name())
 	end
-	
+	biome_jungle = nil
+	biome_snow = nil
+	biome_desert = nil
 	end
 	end
 end)
