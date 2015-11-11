@@ -124,7 +124,10 @@ minetest.register_abm({ --apples grow in spring
 			local below = minetest.get_node_or_nil(posbelow)
 			print(below.name)
 			if below.name == 'air' then
-				minetest.set_node(posbelow,{name = 'default:apple'})
+				local a = minetest.find_node_near(pos, 3, 'default:apple')
+				if a == nil then
+					minetest.set_node(posbelow,{name = 'default:apple'})
+				end
 			end
 		end
 	end
