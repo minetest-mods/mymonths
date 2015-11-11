@@ -19,32 +19,32 @@ minetest.register_chatcommand("setweather", {
 --Set month
 minetest.register_chatcommand("setmonth", {
 	params = "",
-	description = "Set the month. Use the number 1-12",
+	description = "Set the month. Use the number 1-12 or the name",
 	privs = {mymonths = true},
 	func = function(name, param)
-		if param == "1" then 
+		if param == "1" or "January" or "january" or "jan" then 
 			mymonths.month = "January"
-		elseif param == "2" then 
+		elseif param == "2" or "Febuary" or "febuary" or "feb" then 
 			mymonths.month = "Febuary"
-		elseif param == "3" then 
+		elseif param == "3" or "March" or "march" or "mar" then 
 			mymonths.month = "March"
-		elseif param == "4" then 
+		elseif param == "4" or "April" or "april" or "apr" then 
 			mymonths.month = "April"
-		elseif param == "5" then 
+		elseif param == "5" or "May" or "may" then 
 			mymonths.month = "May"
-		elseif param == "6" then 
+		elseif param == "6" or "June" or "june" or "jun" then 
 			mymonths.month = "June"
-		elseif param == "7" then 
+		elseif param == "7" or "July" or "july" or "jul" then 
 			mymonths.month = "July"
-		elseif param == "8" then 
+		elseif param == "8" or "Augest" or "augest" or "aug" then 
 			mymonths.month = "Augest"
-		elseif param == "9" then 
+		elseif param == "9" or "September" or "september" or "sept" then 
 			mymonths.month = "September"
-		elseif param == "10" then 
+		elseif param == "10" or "October" or "october" or "oct" then 
 			mymonths.month = "October"
-		elseif param == "11" then 
+		elseif param == "11" or "November" or "november" or "nov" then 
 			mymonths.month = "November"
-		elseif param == "12" then 
+		elseif param == "12" or "December" or "december" or "dec"then 
 			mymonths.month = "December"
 		end
 		mymonths.month_counter = param
@@ -73,8 +73,10 @@ minetest.register_chatcommand("date", {
 		ampm = "pm"
 		th = th - 12
 		if th == 0 then th = 12 end
-	elseif tonumber(th..tm) >=2401 or tonumber(th) <= 1200 then
+	else
 		ampm = "am"
+		print(th)
+		if th == 0 or th == "" then th = 12 end
 	end
 	--
 	minetest.chat_send_player(name,"The time is "..th..":"..mi.." "..ampm.." on "..mymonths.month.." "..mymonths.day_counter)

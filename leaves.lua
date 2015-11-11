@@ -121,7 +121,7 @@ minetest.register_abm({ --apples grow in spring
 	action = function (pos, node, active_object_count, active_object_count_wider)
 		if mymonths.month == 'June' or 'July' or 'August' then
 			local posbelow = {x=pos.x, y=pos.y-1, z=pos.z}
-			local below = minetest.get_node_or_nil(posbelow)
+			local below = minetest.get_node(posbelow)
 			print(below.name)
 			if below.name == 'air' then
 				local a = minetest.find_node_near(pos, 3, 'default:apple')
