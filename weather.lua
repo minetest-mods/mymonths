@@ -14,6 +14,7 @@ minetest.register_globalstep(function(dtime)
 	for _, player in ipairs(minetest.get_connected_players()) do
 		local ppos = player:getpos()
 		local person = player
+		local nodein = minetest.get_node(ppos)
 		local nodeu = minetest.get_node({x=ppos.x,y=ppos.y-1,z=ppos.z})
 		local biome_jungle = minetest.find_node_near(ppos, 5, "default:jungletree","default:junglegrass")
 		local biome_desert = minetest.find_node_near(ppos, 5, "default:desert_sand","default:desert_stone")
@@ -28,8 +29,22 @@ minetest.register_globalstep(function(dtime)
 		local vel_snow = {x=0, y=   -0.4, z=0}
 		local acc_snow = {x=0, y=   -0.5, z=0}
 		local ran_s = math.random(1,6)
+		
+		if nodein.name == "mymonths:snow_cover_1" then
+			player:set_physics_override(0.9,1,1,true,false)
+		elseif nodein.name == "mymonths:snow_cover_2" then
+			player:set_physics_override(0.8,1,1,true,false)
+		elseif nodein.name == "mymonths:snow_cover_3" then
+			player:set_physics_override(0.7,1,1,true,false)
+		elseif nodein.name == "mymonths:snow_cover_4" then
+			player:set_physics_override(0.6,1,1,true,false)
+		elseif nodein.name == "mymonths:snow_cover_5" then
+			player:set_physics_override(0.5,1,1,true,false)
+		else
+			player:set_physics_override(1,1,1,true,false)
+		end
 
-		if minetest.get_node_light(ppos, 0.5) ~= 15 then return end	
+		if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) ~= 15 then return end	
 
 		if mymonths.weather2 == "none" then return end
 

@@ -22,29 +22,29 @@ minetest.register_chatcommand("setmonth", {
 	description = "Set the month. Use the number 1-12 or the name",
 	privs = {mymonths = true},
 	func = function(name, param)
-		if param == "1" or "January" or "january" or "jan" then 
+		if param == "1" or param == "January" or param == "january" or param == "jan" then 
 			mymonths.month = "January"
-		elseif param == "2" or "February" or "february" or "feb" then 
-			mymonths.month = "February"
-		elseif param == "3" or "March" or "march" or "mar" then 
+		elseif param == "2" or param == "Febuary" or param == "febuary" or param == "feb" then 
+			mymonths.month = "Febuary"
+		elseif param == "3" or param == "March" or param == "march" or param == "mar" then 
 			mymonths.month = "March"
-		elseif param == "4" or "April" or "april" or "apr" then 
+		elseif param == "4" or param == "April" or param == "april" or param == "apr" then 
 			mymonths.month = "April"
-		elseif param == "5" or "May" or "may" then 
+		elseif param == "5" or param == "May" or param == "may" then 
 			mymonths.month = "May"
-		elseif param == "6" or "June" or "june" or "jun" then 
+		elseif param == "6" or param == "June" or param == "june" or param == "jun" then 
 			mymonths.month = "June"
-		elseif param == "7" or "July" or "july" or "jul" then 
+		elseif param == "7" or param == "July" or param == "july" or param == "jul" then 
 			mymonths.month = "July"
-		elseif param == "8" or "August" or "august" or "aug" then 
+		elseif param == "8" or param == "Augest" or param == "augest" or param == "aug" then 
 			mymonths.month = "Augest"
-		elseif param == "9" or "September" or "september" or "sept" then 
+		elseif param == "9" or param == "September" or param == "september" or param == "sept" then 
 			mymonths.month = "September"
-		elseif param == "10" or "October" or "october" or "oct" then 
+		elseif param == "10" or param == "October" or param == "october" or param == "oct" then 
 			mymonths.month = "October"
-		elseif param == "11" or "November" or "november" or "nov" then 
+		elseif param == "11" or param == "November" or param == "november" or param == "nov" then 
 			mymonths.month = "November"
-		elseif param == "12" or "December" or "december" or "dec"then 
+		elseif param == "12" or param == "December" or param == "december" or param == "dec"then 
 			mymonths.month = "December"
 		end
 		mymonths.month_counter = param
