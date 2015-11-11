@@ -24,8 +24,8 @@ minetest.register_chatcommand("setmonth", {
 	func = function(name, param)
 		if param == "1" or "January" or "january" or "jan" then 
 			mymonths.month = "January"
-		elseif param == "2" or "Febuary" or "febuary" or "feb" then 
-			mymonths.month = "Febuary"
+		elseif param == "2" or "February" or "february" or "feb" then 
+			mymonths.month = "February"
 		elseif param == "3" or "March" or "march" or "mar" then 
 			mymonths.month = "March"
 		elseif param == "4" or "April" or "april" or "apr" then 
@@ -36,7 +36,7 @@ minetest.register_chatcommand("setmonth", {
 			mymonths.month = "June"
 		elseif param == "7" or "July" or "july" or "jul" then 
 			mymonths.month = "July"
-		elseif param == "8" or "Augest" or "augest" or "aug" then 
+		elseif param == "8" or "August" or "august" or "aug" then 
 			mymonths.month = "Augest"
 		elseif param == "9" or "September" or "september" or "sept" then 
 			mymonths.month = "September"
