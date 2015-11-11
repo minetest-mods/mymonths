@@ -78,7 +78,7 @@ minetest.register_globalstep(function(dtime)
 			mymonths.day_speed = t5
 			mymonths.night_speed = t1
 			minetest.chat_send_all("The date is "..mymonths.month.." "..mymonths.day_counter)
---Febuary
+--February
 		elseif mymonths.month_counter == 2 then
 			mymonths.month = "February"
 			mymonths.day_speed = t5
@@ -114,7 +114,7 @@ minetest.register_globalstep(function(dtime)
 			mymonths.day_speed = t1
 			mymonths.night_speed = t5
 			minetest.chat_send_all("The date is "..mymonths.month.." "..mymonths.day_counter)
---Augest
+--August
 		elseif mymonths.month_counter == 8 then
 			mymonths.month = "August"
 			mymonths.day_speed = t1
@@ -165,7 +165,7 @@ minetest.register_globalstep(function(dtime)
 				minetest.chat_send_all("Looks like snow is on it's way")
 				save_table()
 				end
-		elseif mymonths.month_counter == 2 then--Febuary
+		elseif mymonths.month_counter == 2 then--February
 				if math.random(1, 10000) == 1 then
 				mymonths.weather = "snow"
 				minetest.chat_send_all("Looks like snow is on it's way")
@@ -207,7 +207,7 @@ minetest.register_globalstep(function(dtime)
 				minetest.chat_send_all("Might be a rainy day")
 				save_table()
 				end
-		elseif mymonths.month_counter == 8 then --Augest
+		elseif mymonths.month_counter == 8 then --August
 				if math.random(1, 50000) == 1 then
 				mymonths.weather = "rain"
 				minetest.chat_send_all("Might be a rainy day")
