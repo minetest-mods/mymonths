@@ -53,11 +53,18 @@ minetest.register_chatcommand("setmonth", {
 })
 --Weather
 -- Set weather
-minetest.register_chatcommand("weather", {
+minetest.register_chatcommand("w", {
 	params = "",
 	description = "Set weather to rain, snow, wind or none",
 	func = function(name, param)
 		minetest.chat_send_player(name,"The weather is "..mymonths.weather)
+	end
+})
+minetest.register_chatcommand("w2", {
+	params = "",
+	description = "Set weather to rain, snow, wind or none",
+	func = function(name, param)
+		minetest.chat_send_player(name,"The weather is "..mymonths.weather2)
 	end
 })
 --Time and Date

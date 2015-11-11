@@ -196,6 +196,8 @@ minetest.register_globalstep(function(dtime)
 		elseif mymonths.month_counter == 6 then --June
 				if math.random(1, 20000) == 1 then
 				mymonths.weather = "rain"
+				elseif math.random(1, 50000) == 1 then
+				mymonths.weather = "storm"
 				minetest.chat_send_all("Might be a rainy day")
 				save_table()
 				end

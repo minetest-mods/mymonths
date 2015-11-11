@@ -2,21 +2,23 @@ addvectors = function (v1, v2)
 	return {x=v1.x+v2.x, y=v1.y+v2.y, z=v1.z+v2.z}
 end
 
+
+
 local t = 0
 minetest.register_globalstep(function(dtime)
 
 	t = t + dtime
 	if t >= 1 then
-	
+
 	mymonths.weather2 = mymonths.weather
 	for _, player in ipairs(minetest.get_connected_players()) do
 		local ppos = player:getpos()
+		local person = player
 		local nodeu = minetest.get_node({x=ppos.x,y=ppos.y-1,z=ppos.z})
 		local biome_jungle = minetest.find_node_near(ppos, 5, "default:jungletree","default:junglegrass")
 		local biome_desert = minetest.find_node_near(ppos, 5, "default:desert_sand","default:desert_stone")
 		local biome_snow = minetest.find_node_near(ppos, 5, "default:snow","default:snowblock","default:dirt_with_snow","default:ice")
-		
-	
+		--print(person)
 		local minp = addvectors(ppos, {x=-7, y=7, z=-7})
 		local maxp = addvectors(ppos, {x= 7, y=7, z= 7})
 		local minp_deep = addvectors(ppos, {x=-10, y=3.2, z=-10})
@@ -25,28 +27,62 @@ minetest.register_globalstep(function(dtime)
 		local acc_rain = {x=0, y=-9.81, z=0}
 		local vel_snow = {x=0, y=   -0.4, z=0}
 		local acc_snow = {x=0, y=   -0.5, z=0}
+		local ran_s = math.random(1,6)
 
-	if minetest.get_node_light(ppos, 0.5) ~= 15 then return end	
+		if minetest.get_node_light(ppos, 0.5) ~= 15 then return end	
 
-	if mymonths.weather2 == "none" then return end
+		if mymonths.weather2 == "none" then return end
 
-	if biome_jungle ~= nil and
-		mymonths.weather == "snow" then
-		mymonths.weather2 = "rain"
-	elseif biome_desert ~= nil and
-		mymonths.weather == "snow" then
-		mymonths.weather2 = "none"
-	elseif biome_desert ~= nil and
-		mymonths.weather == "rain" then
-		mymonths.weather2 = "none"
-	elseif biome_snow ~= nil and
-		mymonths.weather == "rain" then
-		mymonths.weather2 = "snow"
-	else
-		mymonths.weather2 = mymonths.weather
-	end
+		if biome_jungle ~= nil and
+			mymonths.weather == "snow" then
+			mymonths.weather2 = "rain"
+		elseif biome_jungle ~= nil and
+			mymonths.weather == "snowstorm" then
+			mymonths.weather2 = "storm"
+		elseif biome_desert ~= nil and
+			mymonths.weather == "snow" then
+			mymonths.weather2 = "none"
+		elseif biome_desert ~= nil and
+			mymonths.weather == "rain" then
+			mymonths.weather2 = "none"
+		elseif biome_desert ~= nil and
+			mymonths.weather == "storm" then
+			mymonths.weather2 = "none"
+		elseif biome_desert ~= nil and
+			mymonths.weather == "snowstorm" then
+			mymonths.weather2 = "none"
+		elseif biome_snow ~= nil and
+			mymonths.weather == "rain" then
+			mymonths.weather2 = "snow"
+		elseif biome_snow ~= nil and
+			mymonths.weather == "storm" then
+			mymonths.weather2 = "snowstorm"
+		else
+			mymonths.weather2 = mymonths.weather
+		end
 	
+	if mymonths.weather2 == "storm" then
+		local ran_t = math.random(1,200)
+		--storm
+			minetest.add_particlespawner({amount=40, time=0.5,
+				minpos=minp, maxpos=maxp,
+				minvel=vel_rain, maxvel=vel_rain,
+				minacc=acc_rain, maxacc=acc_rain,
+				minexptime=0.8, maxexptime=0.8,
+				minsize=25, maxsize=40,
+				collisiondetection=false, vertical=true, texture="weather_rain_dark.png", player:get_player_name()
+				})
+
+				if ran_t == 1 then
+					minetest.sound_play("mymonths_thunder", {
+					pos = ppos,
+					max_hear_distance = 10,
+					gain = 10.0,
+					})
+				end
+	end
 	if mymonths.weather2 == "rain" then
+		--light rain
 		minetest.add_particlespawner({amount=15, time=0.5,
 			minpos=minp, maxpos=maxp,
 			minvel=vel_rain, maxvel=vel_rain,
@@ -72,10 +108,42 @@ minetest.register_globalstep(function(dtime)
 			15, 25,
 			false, "weather_snow.png", player:get_player_name())
 	end
+
+	if mymonths.weather2 == "snowstorm" then
+			minetest.add_particlespawner(25, 0.5,
+			minp, maxp,
+			vel_snow, vel_snow,
+			acc_snow, acc_snow,
+			4, 6,
+			15, 35,
+			false, "weather_snow.png", player:get_player_name())
+		minetest.add_particlespawner(25, 0.5,
+			minp_deep, maxp_deep,
+			vel_snow, vel_snow,
+			acc_snow, acc_snow,
+			4, 6,
+			15, 25,
+			false, "weather_snow.png", player:get_player_name())
+	end
+
 	biome_jungle = nil
 	biome_snow = nil
 	biome_desert = nil
 	end
+	end
+end)
+t2 = 0
+minetest.register_globalstep(function(dtime)
+
+	t2 = t2 + dtime
+	if t2 >= 1 and
+	mymonths.weather2 == "rain" then
+	t2=0
+		minetest.sound_play("mymonths_rain1", {
+			pos = ppos,
+			max_hear_distance = 10,
+			gain = 2.0,
+		})
 	end
 end)
 
@@ -120,9 +188,10 @@ minetest.register_node(itm, {
 	drawtype = "nodebox",
 	paramtype = "light",
 	buildable_to = true,
+	walkable = false,
 	node_box = {type  = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, box, 0.5}},
 	selection_box = {type  = "fixed",fixed = {-0.5, -0.5, -0.5, 0.5, box, 0.5}},
-	groups = {not_in_creative_inventory = 0, crumbly = 3, attached_node = 1},
+	groups = {not_in_creative_inventory = 0, crumbly = 3, attached_node = 0, falling_node = 1},
 	drop = "default:snow "..num
 })
 end
