@@ -37,6 +37,7 @@ mymonths.day_counter = 1
 mymonths.month_counter = 6
 mymonths.month = "June"
 mymonths.weather = "none"
+mymonths.weather2 = "none"
 else
 mymonths.day_speed = read_mymonths().day_speed
 mymonths.night_speed = read_mymonths().night_speed
@@ -44,11 +45,10 @@ mymonths.day_counter = read_mymonths().day_counter
 mymonths.month_counter = read_mymonths().month_counter
 mymonths.month = read_mymonths().month
 mymonths.weather = read_mymonths().weather
+mymonths.weather2 = "none"
 end
 
-addvectors = function (v1, v2)
-	return {x=v1.x+v2.x, y=v1.y+v2.y, z=v1.z+v2.z}
-end
+
 
 local timer = 0
 minetest.register_globalstep(function(dtime)
@@ -162,84 +162,92 @@ minetest.register_globalstep(function(dtime)
 		if mymonths.month_counter == 1 then--January
 				if math.random(1, 10000) == 1 then
 				mymonths.weather = "snow"
+				minetest.chat_send_all("Looks like snow is on it's way")
 				save_table()
 				end
 		elseif mymonths.month_counter == 2 then--Febuary
 				if math.random(1, 10000) == 1 then
 				mymonths.weather = "snow"
+				minetest.chat_send_all("Looks like snow is on it's way")
 				save_table()
 				end
 		elseif mymonths.month_counter == 3 then --March
 				if math.random(1, 10000) == 1 then
 				mymonths.weather = "rain"
-				--save_table()
-				--end
-		--elseif mymonths.month_counter == 3 then --March
+				minetest.chat_send_all("Might be a rainy day")
+				save_table()
 				elseif math.random(1, 25000) == 2 then
 				mymonths.weather = "snow"
+				minetest.chat_send_all("Looks like snow is on it's way")
 				save_table()
 				end
 		elseif mymonths.month_counter == 4 then --April
 				if math.random(1, 10000) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("Might be a rainy day")
 				save_table()
 				end
 		elseif mymonths.month_counter == 5 then --May
 				if math.random(1, 15000) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("Might be a rainy day")
 				save_table()
 				end
 		elseif mymonths.month_counter == 6 then --June
 				if math.random(1, 20000) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("Might be a rainy day")
 				save_table()
 				end
 		elseif mymonths.month_counter == 7 then --July
 				if math.random(1, 50000) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("Might be a rainy day")
 				save_table()
 				end
 		elseif mymonths.month_counter == 8 then --Augest
 				if math.random(1, 50000) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("Might be a rainy day")
 				save_table()
 				end
 		elseif mymonths.month_counter == 9 then --September
 				if math.random(1, 15000) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("Might be a rainy day")
 				save_table()
 				end
 		elseif mymonths.month_counter == 10 then --October
 				if math.random(1, 10000) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("Might be a rainy day")
 				save_table()
 				end
 		elseif mymonths.month_counter == 11 then --November
 				if math.random(1, 10000) == 1 then
 				mymonths.weather = "rain"
-				--save_table()
-				--end
-		--elseif mymonths.month_counter == 11 then --November
+				minetest.chat_send_all("Might be a rainy day")
+				save_table()
 				elseif math.random(1, 20000) == 2 then
 				mymonths.weather = "snow"
+				minetest.chat_send_all("Looks like snow is on it's way")
 				save_table()
 				end
 		elseif mymonths.month_counter == 12 then --December
 				if math.random(1, 25000) == 1 then
 				mymonths.weather = "rain"
-				--save_table()
-				--end
-		--elseif mymonths.month_counter == 12 then --December
+				minetest.chat_send_all("Might be a rainy day")
+				save_table()
 				elseif math.random(1, 10000) == 1 then
 				mymonths.weather = "snow"
+				minetest.chat_send_all("Looks like snow is on it's way")
 				save_table()
 				end
 		end
 	end
 end)
 
-dofile(minetest.get_modpath("mymonths").."/rain.lua")
-dofile(minetest.get_modpath("mymonths").."/snow.lua")
+dofile(minetest.get_modpath("mymonths").."/weather.lua")
 dofile(minetest.get_modpath("mymonths").."/abms.lua")
 dofile(minetest.get_modpath("mymonths").."/leaves.lua")
 dofile(minetest.get_modpath("mymonths").."/command.lua")

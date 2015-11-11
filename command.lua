@@ -51,11 +51,19 @@ minetest.register_chatcommand("setmonth", {
 		save_table()
 	end
 })
+--Weather
+-- Set weather
+minetest.register_chatcommand("weather", {
+	params = "",
+	description = "Set weather to rain, snow, wind or none",
+	func = function(name, param)
+		minetest.chat_send_player(name,"The weather is "..mymonths.weather)
+	end
+})
 --Time and Date
 minetest.register_chatcommand("date", {
 	params = "",
 	description = "Say the date in chat",
-	--privs = {mymonths = true},
 	func = function(name, param)
 	local t = tostring(minetest.get_timeofday() * 2400)
 	local tt = string.find(t, "%p",1)

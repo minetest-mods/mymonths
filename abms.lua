@@ -5,7 +5,7 @@ minetest.register_abm({
 	interval = 10.0, 
 	chance = 80,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.weather == "snow" then
+		if mymonths.weather2 == "snow" then
 			local na = minetest.get_node({x=pos.x,y=pos.y+1,z=pos.z})
 			if minetest.get_node_light({x=pos.x,y=pos.y+1,z=pos.z}, 0.5) == 15
 			and na.name == "air" then
@@ -17,11 +17,11 @@ minetest.register_abm({
 -- Changes snow to larger snow
 minetest.register_abm({
 	nodenames = {"mymonths:snow_cover_1","mymonths:snow_cover_2","mymonths:snow_cover_3","mymonths:snow_cover_4"},
-	neighbors = {"group:crumbly", "group:snappy", "group:cracky", "group:choppy"},
+	neighbors = {"default:dirt","default:dirt_with_grass"},
 	interval = 10.0, 
 	chance = 80,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-			if mymonths.weather == "snow" then
+			if mymonths.weather2 == "snow" then
 				if node.name == "mymonths:snow_cover_1" then
 					minetest.set_node(pos,{name = "mymonths:snow_cover_2"})
 				elseif node.name == "mymonths:snow_cover_2" then
@@ -29,15 +29,14 @@ minetest.register_abm({
 				elseif node.name == "mymonths:snow_cover_3" then
 					minetest.set_node(pos,{name = "mymonths:snow_cover_4"})
 				elseif node.name == "mymonths:snow_cover_4" then
-					minetest.set_node(pos,{name = "default:snowblock"})
+					minetest.set_node(pos,{name = "mymonths:snow_cover_5"})
 				end
 			end
 	end
 })
 --Snow Melting
 minetest.register_abm({
-	nodenames = {"default:snowblock","mymonths:snow_cover_1","mymonths:snow_cover_2","mymonths:snow_cover_3","mymonths:snow_cover_4"},
-	--neighbors = {"group:crumbly", "group:snappy", "group:cracky", "group:choppy"},
+	nodenames = {"mymonths:snow_cover_1","mymonths:snow_cover_2","mymonths:snow_cover_3","mymonths:snow_cover_4","mymonths:snow_cover_5"},
 	interval = 10.0, 
 	chance = 80,
 	action = function (pos, node, active_object_count, active_object_count_wider)
@@ -50,7 +49,7 @@ minetest.register_abm({
 				minetest.set_node(pos,{name = "mymonths:snow_cover_2"})
 			elseif node.name == "mymonths:snow_cover_4" then
 				minetest.set_node(pos,{name = "mymonths:snow_cover_3"})
-			elseif node.name == "default:snowblock" then
+			elseif node.name == "mymonths:snow_cover_5" then
 				minetest.set_node(pos,{name = "mymonths:snow_cover_4"})
 			elseif node.name == "mymonths:snow_cover_1" then
 				local nu = minetest.get_node({x=pos.x,y=pos.y-1,z=pos.z})
@@ -70,7 +69,7 @@ minetest.register_abm({
 	interval = 10.0, 
 	chance = 5000,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.weather == "rain" then
+		if mymonths.weather2 == "rain" then
 				local na = minetest.get_node({x=pos.x,y=pos.y+1,z=pos.z})
 				local nn = minetest.find_node_near(pos, 20, "mymonths:puddle")
 				if nn == nil then
@@ -91,18 +90,9 @@ minetest.register_abm({
 	action = function (pos, node, active_object_count, active_object_count_wider)
 		if mymonths.weather == "none" then
 			minetest.remove_node(pos)
-		end
-	end
-})
---Makes puddles turn into snow if weather is snow
-minetest.register_abm({
-	nodenames = {"mymonths:puddle"},
-	neighbors = {},
-	interval = 10.0, 
-	chance = 5,
-	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.weather == "snow" then
+		elseif mymonths.weather2 == "snow" then
 			minetest.set_node(pos,{name = "mymonths:snow_cover_1"})
 		end
 	end
 })
+
