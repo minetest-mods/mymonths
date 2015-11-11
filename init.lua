@@ -20,7 +20,7 @@ minetest.register_globalstep(function(dtime)
 	end
 end)
 mymonths = {}
-local days_per_month = 15
+local days_per_month = 2
 local morn = 6000
 local night = 22000
 local tseconds = 3

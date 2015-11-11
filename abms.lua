@@ -72,12 +72,9 @@ minetest.register_abm({
 	action = function (pos, node, active_object_count, active_object_count_wider)
 		if mymonths.weather == "rain" then
 				local na = minetest.get_node({x=pos.x,y=pos.y+1,z=pos.z})
-				local nn = minetest.find_node_near(pos, 20, "mymonths:puddle")
-				if nn == nil then
-					if minetest.get_node_light({x=pos.x,y=pos.y+1,z=pos.z}, 0.5) == 15
-					and na.name == "air" then
-						minetest.set_node({x=pos.x,y=pos.y+1,z=pos.z}, {name="mymonths:puddle"})
-					end
+				if minetest.get_node_light({x=pos.x,y=pos.y+1,z=pos.z}, 0.5) == 15
+				and na.name == "air" then
+					minetest.set_node({x=pos.x,y=pos.y+1,z=pos.z}, {name="mymonths:puddle"})
 				end
 		end
 	end
