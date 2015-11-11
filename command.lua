@@ -63,16 +63,22 @@ minetest.register_chatcommand("date", {
 	local tm = string.sub(t, tt-2,tt-1)
 	local m = (tm/100)*60
 	local mx = m+1000
-	local mf = string.find(mx, "%p",1)
+	local my = ".00"
+	local mz = mx..my
+	local mf = string.find(mz, "%p",1)
 	local mi = string.sub(mx,mf-2,mf-1) 
 	local ampm = "am"
-	if tonumber(th) >= 13 and tonumber(th) <= 24 then 
+	if th == nil then th = 0 end
+	if tonumber(th..tm) >= 1201 and tonumber(th) <= 2400 then 
 		ampm = "pm"
 		th = th - 12
-	else
+		if th == 0 then th = 12 end
+	elseif tonumber(th..tm) >=2401 or tonumber(th) <= 1200 then
 		ampm = "am"
 	end
 	--
 	minetest.chat_send_player(name,"The time is "..th..":"..mi.." "..ampm.." on "..mymonths.month.." "..mymonths.day_counter)
+
 	end
+	
 })
