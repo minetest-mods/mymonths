@@ -66,7 +66,7 @@ minetest.register_abm({ --leaves 'falling/dying' in October
 })
 
 minetest.register_abm({ --All leaves should be sticks in November
-	nodenames = {'group:leaves'},
+	nodenames = {'default:leaves', 'mymonths:leaves_pale_green', 'mymonths:leaves_orange', 'mymonths:leaves_red'},
 	interval = 5,
 	chance = 1,
 	action = function (pos, node, active_object_count, active_object_count_wider)
@@ -92,13 +92,12 @@ minetest.register_abm({ --New growth in spring
 })
 
 minetest.register_abm({ --By April all trees should be back to normal
-	nodenames = {'group:leaves'},
+	nodenames = {'mymonths:leaves_sticks', 'mymonths:leaves_blooms'},
 	interval = 5,
 	chance = 1,
 	action = function (pos, node, active_object_count, active_object_count_wider)
 		if mymonths.month == 'April' then
 			minetest.swap_node(pos, {name = 'default:leaves'})
-			print 'replacing leaves'
 		end
 	end
 })
@@ -119,10 +118,9 @@ minetest.register_abm({ --apples grow in spring
 	interval = 15,
 	chance = 20,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month == 'June' or 'July' or 'August' then
+		if mymonths.month == 'July' or 'August' or 'September' then
 			local posbelow = {x=pos.x, y=pos.y-1, z=pos.z}
 			local below = minetest.get_node_or_nil(posbelow)
-			print(below.name)
 			if below.name == 'air' then
 				local a = minetest.find_node_near(pos, 3, 'default:apple')
 				if a == nil then
