@@ -51,6 +51,18 @@ minetest.register_chatcommand("setmonth", {
 		save_table()
 	end
 })
+--Set Days
+
+minetest.register_chatcommand("setday", {
+	params = "",
+	description = "Set the day of the month",
+	privs = {mymonths = true},
+	func = function(name, param)
+	for day = 1,mymonths.days_per_month do
+	if param == ""..day then mymonths.day_counter = day end
+	end
+	end
+})
 --Weather
 -- Set weather
 minetest.register_chatcommand("w", {
