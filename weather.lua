@@ -12,88 +12,96 @@ local month = mymonths.month_counter
    	if 	mymonths.weather == "rain" or 
 		mymonths.weather == "storm" or 
 		mymonths.weather == "snow" or 
-		mymonths.weather == "snowstorm" then
+		mymonths.weather == "snowstorm" or 
+		mymonths.weather == "sandstorm" or
+		mymonths.weather == "hail" then
 		if math.random(1, 50) == 1 then
 			mymonths.weather = "none"
 		end
 	else
 
-		if month == "1" then--January
+		if 		month == "1" then--January
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "snow"
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "snowstorm"
 				end
-		elseif month == "2" then--Febuary
+		elseif 	month == "2" then--Febuary
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "snow"
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "snowstorm"
+				elseif math.random(1, 500) == 1 then
+				mymonths.weather = "hail"
 				end
-		elseif month == "3" then --March
+		elseif 	month == "3" then --March
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 250) == 2 then
 				mymonths.weather = "snow"
+				elseif math.random(1, 500) == 1 then
+				mymonths.weather = "hail"
 				end
-		elseif month == "4" then --April
+		elseif 	month == "4" then --April
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "rain"
 				end
-		elseif month == "5" then --May
+		elseif 	month == "5" then --May
 				if math.random(1, 150) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif month == "6" then --June
+		elseif 	month == "6" then --June
 				if math.random(1, 200) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif month == "7" then --July
+		elseif 	month == "7" then --July
 				if math.random(1, 500) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif month == "8" then --Augest
+		elseif 	month == "8" then --Augest
 				if math.random(1, 500) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif month == "9" then --September
+		elseif 	month == "9" then --September
 				if math.random(1, 150) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 250) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif month == "10" then --October
+		elseif 	month == "10" then --October
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 250) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif month == "11" then --November
+		elseif 	month == "11" then --November
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 200) == 2 then
 				mymonths.weather = "snow"
 				end
-		elseif month == "12" then --December
+		elseif 	month == "12" then --December
 				if math.random(1, 250) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 100) == 1 then
 				mymonths.weather = "snow"
+				elseif math.random(1, 500) == 1 then
+				mymonths.weather = "hail"
 				end
 		end
 
 	end
 end)
 
---Weather vectors and particles are from jeija's weather mod
+--Weather vectors and some particles are from jeija's weather mod
 addvectors = function (v1, v2)
 	return {x=v1.x+v2.x, y=v1.y+v2.y, z=v1.z+v2.z}
 end
@@ -114,12 +122,16 @@ minetest.register_globalstep(function(dtime)
 		
 		local minp = addvectors(ppos, {x=-10, y=7, z=-10})
 		local maxp = addvectors(ppos, {x= 10, y=7, z= 10})
+		local minps = addvectors(ppos, {x=-15, y=0, z=-10})
+		local maxps = addvectors(ppos, {x= 5, y=3, z= 10})
 		local minp_deep = addvectors(ppos, {x=-10, y=3.2, z=-10})
 		local maxp_deep = addvectors(ppos, {x= 10, y=2.6, z= 10})
 		local vel_rain = {x=0, y=-4, z=0}
 		local acc_rain = {x=0, y=-9.81, z=0}
 		local vel_snow = {x=0, y=-0.4, z=0}
 		local acc_snow = {x=0, y=-0.5, z=0}
+		local vel_sand = {x=1, y=-0.1, z=0}
+		local acc_sand = {x=2, y=0, z=0}
 		local ran_s = math.random(1,6)
 		
 		--slows players walk in snow
@@ -145,7 +157,8 @@ minetest.register_globalstep(function(dtime)
 		--changes weather based on biome
 		--Jungle
 		if biome_jungle ~= nil then
-			if 		mymonths.weather == "snow" then
+			if 		mymonths.weather == "snow" or
+					mymonths.weather == "hail" then
 					mymonths.weather2 = "rain"
 			elseif 	mymonths.weather == "snowstorm" then
 					mymonths.weather2 = "storm"
@@ -154,8 +167,9 @@ minetest.register_globalstep(function(dtime)
 			if		mymonths.weather == "snow" or
 					mymonths.weather == "snowstorm" or
 					mymonths.weather == "storm" or
+					mymonths.weather == "hail" or
 					mymonths.weather == "rain" then
-					mymonths.weather2 = "none"
+					mymonths.weather2 = "sandstorm"
 			end
 		elseif biome_snow ~= nil then
 			if		mymonths.weather == "rain" then
@@ -242,6 +256,30 @@ minetest.register_globalstep(function(dtime)
 			collisiondetection = false, 
 			vertical = true, 
 			texture = "weather_snow.png", 
+			playername = name})
+
+	elseif mymonths.weather2 == "sandstorm" then
+		minetest.add_particlespawner({amount = 35, time = 0.5,
+			minpos = minps, maxpos = maxps,
+			minvel = vel_sand, maxvel = vel_sand,
+			minacc = acc_sand, maxacc = acc_sand,
+			minexptime = 4, maxexptime = 4,
+			minesize = 5, maxsize = 10,
+			collisiondetection = false, 
+			vertical = true, 
+			texture = "weather_sand.png", 
+			playername = name})
+
+	elseif mymonths.weather2 == "hail" then
+		minetest.add_particlespawner({amount = 35, time = 0.5,
+			minpos = minp, maxpos = maxp,
+			minvel = vel_rain, maxvel = vel_rain,
+			minacc = acc_rain, maxacc = acc_rain,
+			minexptime = 1, maxexptime = 1,
+			minesize = 5, maxsize = 10,
+			collisiondetection = true, 
+			vertical = true, 
+			texture = "weather_hail.png", 
 			playername = name})
 	end
 

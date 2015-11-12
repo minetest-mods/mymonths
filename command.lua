@@ -57,6 +57,7 @@ minetest.register_chatcommand("setday", {
 	privs = {mymonths = true},
 	func = function(name, param)
 	for day = 1,mymonths.days_per_month do
+	if param >= 15 then return end
 	if param == ""..day then mymonths.day_counter = day end
 	end
 	end
