@@ -1,14 +1,12 @@
-minetest.register_privilege("weather", {
-	description = "Change the weather",
-	give_to_singleplayer = false
-})
+
+--Sets the privs for changing settings
 minetest.register_privilege("mymonths", {
 	description = "Change the weather",
 	give_to_singleplayer = false
 })
 -- Set weather
 minetest.register_chatcommand("setweather", {
-	params = "<weather>",
+	params = "<mymonths>",
 	description = "Set weather to rain, snow, wind or none",
 	privs = {mymonths = true},
 	func = function(name, param)
@@ -64,21 +62,14 @@ minetest.register_chatcommand("setday", {
 	end
 })
 --Weather
--- Set weather
-minetest.register_chatcommand("w", {
+minetest.register_chatcommand("weather", {
 	params = "",
-	description = "Set weather to rain, snow, wind or none",
-	func = function(name, param)
-		minetest.chat_send_player(name,"The weather is "..mymonths.weather)
-	end
-})
-minetest.register_chatcommand("w2", {
-	params = "",
-	description = "Set weather to rain, snow, wind or none",
+	description = "Tells player the weather",
 	func = function(name, param)
 		minetest.chat_send_player(name,"The weather is "..mymonths.weather2)
 	end
 })
+
 --Time and Date
 minetest.register_chatcommand("date", {
 	params = "",
@@ -102,12 +93,9 @@ minetest.register_chatcommand("date", {
 		if th == 0 then th = 12 end
 	else
 		ampm = "am"
-		print(th)
 		if th == 0 or th == "" then th = 12 end
 	end
-	--
-	minetest.chat_send_player(name,"The time is "..th..":"..mi.." "..ampm.." on "..mymonths.month.." "..mymonths.day_counter)
-
+	minetest.chat_send_player(name,"The time is "..th..":"..mi.." "..ampm.." on "..mymonths.day_name.." "..mymonths.month.." "..mymonths.day_counter)
 	end
 	
 })
