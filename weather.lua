@@ -253,6 +253,8 @@ end)
 t2 = 0
 minetest.register_globalstep(function(dtime)
 
+	for _, player in ipairs(minetest.get_connected_players()) do
+		local ppos = player:getpos()
 	t2 = t2 + dtime
 	if t2 >= 1 and
 	mymonths.weather2 == "rain" then
@@ -262,6 +264,7 @@ minetest.register_globalstep(function(dtime)
 			max_hear_distance = 10,
 			gain = 2.0,
 		})
+	end
 	end
 end)
 

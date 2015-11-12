@@ -5,7 +5,6 @@ local leaves_table = {--name, tex
 {'red', 'red'}, --third stage
 {'sticks', 'sticks'}, --after leaves fall
 {'blooms', 'blooms'}, --Spring!!!
-{'acacia_blooms', 'acacia_blooms'}, --Acacia blooms for January
 }
 
 for i in ipairs (leaves_table) do
@@ -57,7 +56,7 @@ minetest.register_abm({ --All leaves should be red in October
 
 minetest.register_abm({ --leaves 'falling/dying' in October
 	nodenames = {'mymonths:leaves_red'},
-	interval = 10, 
+	interval = 10.0, 
 	chance = 10,
 	action = function (pos, node, active_object_count, active_object_count_wider)
 		if mymonths.month == 'October' then
@@ -109,7 +108,7 @@ minetest.register_abm({ --apples die in November
 	chance = 10,
 	action = function (pos, node, active_object_count, active_object_count_wider)
 		if mymonths.month == 'November' then
-			minetest.set_node(pos,{name = 'mymonths:leaves_sticks'})
+			minetest.set_node(pos,{name = 'air'})
 		end
 	end
 })
@@ -120,33 +119,14 @@ minetest.register_abm({ --apples grow in spring
 	chance = 20,
 	action = function (pos, node, active_object_count, active_object_count_wider)
 		if mymonths.month == 'July' or 'August' or 'September' then
-			local a = minetest.find_node_near(pos, 3, 'default:apple')
-			if a == nil then
-				minetest.set_node(pos,{name = 'default:apple'})
+			local posbelow = {x=pos.x, y=pos.y-1, z=pos.z}
+			local below = minetest.get_node(posbelow)
+			if below.name == 'air' then
+				local a = minetest.find_node_near(pos, 3, 'default:apple')
+				if a == nil then
+					minetest.set_node(posbelow,{name = 'default:apple'})
+				end
 			end
-		end
-	end
-})
-
-minetest.register_abm({ --Flowery blooms for the Acacia trees
-	nodenames = {'default:acacia_leaves'},
-	interval = 60,
-	chance = 50,
-	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month == 'January' then
-			minetest.swap_node(pos, {name = 'mymonths:leaves_acacia_blooms'})
-		end
-	end
-})
-
-minetest.register_abm({ --Kill the blooms for the Acacia trees
-	nodenames = {'mymonths:leaves_acacia_blooms'},
-	interval = 5,
-	chance = 5,
-	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month == 'February' then
-			print 'does this even run?'
-			minetest.swap_node(pos, {name = 'default:acacia_leaves'})
 		end
 	end
 })
