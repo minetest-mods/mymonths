@@ -99,3 +99,16 @@ minetest.register_chatcommand("date", {
 	end
 	
 })
+minetest.register_chatcommand("holidays", {
+	params = "",
+	description = "Say the date in chat",
+	func = function(name, param)
+	minetest.chat_send_player(name, "New Years Day - January 1")
+	minetest.chat_send_player(name,"Friendship Day - March 12")
+	minetest.chat_send_player(name,"Miners Day - April 10")
+	minetest.chat_send_player(name,"Minetest Day - June 5")
+	minetest.chat_send_player(name,"Builders Day - Augest 12")
+	minetest.chat_send_player(name,"Harvest Day - October 8")
+	minetest.chat_send_player(name, "New Years Eve - December 14")
+	end
+})
