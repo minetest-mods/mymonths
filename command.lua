@@ -1,19 +1,34 @@
 
 --Sets the privs for changing settings
 minetest.register_privilege("mymonths", {
-	description = "Change the weather",
+	description = "Change the weather and date",
 	give_to_singleplayer = false
 })
+
 -- Set weather
+if mymonths.use_weather == true then
 minetest.register_chatcommand("setweather", {
 	params = "<mymonths>",
 	description = "Set weather to rain, snow, wind or none",
 	privs = {mymonths = true},
 	func = function(name, param)
-		mymonths.weather = param
-		save_table()
+	  	if 	param == "rain" or 
+			param == "storm" or 
+			param == "snow" or 
+			param == "snowstorm" or 
+			param == "sandstorm" or
+			param == "hail" or
+			param == "clear" then
+				mymonths.weather = param
+				mymonths.save_table()
+		else
+		minetest.chat_send_player(name,"invalid input - use rain, storm, snow, snowstorm, sandstorm, hail or clear.")
+			return
+		end
 	end
 })
+end
+
 --Set month
 minetest.register_chatcommand("setmonth", {
 	params = "",
@@ -46,23 +61,25 @@ minetest.register_chatcommand("setmonth", {
 			mymonths.month = "December"
 		end
 		mymonths.month_counter = param
-		save_table()
+		mymonths.save_table()
 	end
 })
---Set Days
 
+--Set Days
 minetest.register_chatcommand("setday", {
 	params = "",
 	description = "Set the day of the month",
 	privs = {mymonths = true},
 	func = function(name, param)
-	for day = 1,mymonths.days_per_month do
-	if param >= 15 then return end
-	if param == ""..day then mymonths.day_counter = day end
-	end
+		for day = 1,14 do
+			if tonumber(param) >= 15 then return end
+			if param == day then mymonths.day_counter = day end
+		end
 	end
 })
+
 --Weather
+if mymonths.use_weather == true then
 minetest.register_chatcommand("weather", {
 	params = "",
 	description = "Tells player the weather",
@@ -70,6 +87,7 @@ minetest.register_chatcommand("weather", {
 		minetest.chat_send_player(name,"The weather is "..mymonths.weather2)
 	end
 })
+end
 
 --Time and Date
 minetest.register_chatcommand("date", {
@@ -100,6 +118,8 @@ minetest.register_chatcommand("date", {
 	end
 	
 })
+
+--Gives list of holidays
 minetest.register_chatcommand("holidays", {
 	params = "",
 	description = "Say the date in chat",

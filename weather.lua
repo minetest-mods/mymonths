@@ -15,8 +15,8 @@ local month = mymonths.month_counter
 		mymonths.weather == "snowstorm" or 
 		mymonths.weather == "sandstorm" or
 		mymonths.weather == "hail" then
-		if math.random(1, 50) == 1 then
-			mymonths.weather = "none"
+		if math.random(1, 500) == 1 then
+			mymonths.weather = "clear"
 		end
 	else
 
@@ -105,6 +105,7 @@ end)
 addvectors = function (v1, v2)
 	return {x=v1.x+v2.x, y=v1.y+v2.y, z=v1.z+v2.z}
 end
+
 hp_t = 0
 minetest.register_globalstep(function(dtime)
 hp_t = hp_t + dtime
@@ -158,20 +159,23 @@ hp_t = hp_t + dtime
 		--changes weather based on biome
 		--Jungle
 		if biome_jungle ~= nil then
-			if 		mymonths.weather == "snow" or
-					mymonths.weather == "hail" then
+			if 		mymonths.weather == "snow" then
 					mymonths.weather2 = "rain"
-			elseif 	mymonths.weather == "snowstorm" then
+			elseif 	mymonths.weather == "snowstorm" or
+					mymonths.weather == "hail" then
 					mymonths.weather2 = "storm"
 			end
+		--Desert
 		elseif biome_desert ~= nil then
 			if		mymonths.weather == "snow" or
-					mymonths.weather == "snowstorm" or
-					mymonths.weather == "storm" or
-					mymonths.weather == "hail" or
 					mymonths.weather == "rain" then
+					mymonths.weather2 = "clear"
+			elseif	mymonths.weather == "snowstorm" or
+					mymonths.weather == "hail" or
+					mymonths.weather == "storm" then
 					mymonths.weather2 = "sandstorm"
 			end
+		--Snow
 		elseif biome_snow ~= nil then
 			if		mymonths.weather == "rain" then
 					mymonths.weather2 = "snow"
@@ -194,8 +198,8 @@ hp_t = hp_t + dtime
 			vertical = true, 
 			texture = "weather_rain_dark.png", 
 			playername = name})
-
-			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 then
+			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 and
+				mymonths.damage == true then
 				if hp_t >=15 then
 					player:set_hp(hp-1)
 					hp_t = 0
@@ -266,7 +270,8 @@ hp_t = hp_t + dtime
 			texture = "weather_snow.png", 
 			playername = name})
 			
-			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 then
+			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 and
+				mymonths.damage == true then
 				if hp_t >=15 then
 					player:set_hp(hp-1)
 					hp_t = 0
@@ -285,7 +290,8 @@ hp_t = hp_t + dtime
 			texture = "weather_sand.png", 
 			playername = name})
 			
-			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 then
+			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 and
+				mymonths.damage == true then
 				if hp_t >=15 then
 					player:set_hp(hp-1)
 					hp_t = 0
@@ -304,7 +310,8 @@ hp_t = hp_t + dtime
 			texture = "weather_hail.png", 
 			playername = name})
 		
-			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 then
+			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 and
+				mymonths.damage == true then
 				if hp_t >=15 then
 					player:set_hp(hp-1)
 					hp_t = 0

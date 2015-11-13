@@ -1,4 +1,5 @@
 --Places Snow on ground
+if mymonths.snow_on_ground == true then
 minetest.register_abm({
 	nodenames = {"group:leaves","default:dirt","default:dirt_with_grass"},
 	neighbors = {"air","mymonths:puddle"},
@@ -86,6 +87,9 @@ minetest.register_abm({
 		end
 	end
 })
+end
+
+if mymonths.use_puddles == true then
 --Makes Puddles when raining
 minetest.register_abm({
 	nodenames = {"default:dirt","default:dirt_with_grass"},
@@ -119,4 +123,4 @@ minetest.register_abm({
 		end
 	end
 })
-
+end
