@@ -105,13 +105,14 @@ end)
 addvectors = function (v1, v2)
 	return {x=v1.x+v2.x, y=v1.y+v2.y, z=v1.z+v2.z}
 end
-
-local t = 0
+hp_t = 0
 minetest.register_globalstep(function(dtime)
+hp_t = hp_t + dtime
 
 	mymonths.weather2 = mymonths.weather
 	for _, player in ipairs(minetest.get_connected_players()) do
 		local ppos = player:getpos()
+		local hp = player:get_hp()
 		local name = player:get_player_name()
 		local nodein = minetest.get_node(ppos)
 		local nodeu = minetest.get_node({x=ppos.x,y=ppos.y-1,z=ppos.z})
@@ -182,25 +183,32 @@ minetest.register_globalstep(function(dtime)
 		end
 	
 	if mymonths.weather2 == "storm" then
-		local ran_t = math.random(1,200)
-			minetest.add_particlespawner({amount = 40, time = 0.5,
-				minpos = minp, maxpos=maxp,
-				minvel = vel_rain, maxvel = vel_rain,
-				minacc = acc_rain, maxacc = acc_rain,
-				minexptime = 0.8, maxexptime = 0.8,
-				minsize = 25, maxsize = 40,
-				collisiondetection = false, 
-				vertical = true, 
-				texture = "weather_rain_dark.png", 
-				playername = name})
+	local ran_t = math.random(1,200)
+		minetest.add_particlespawner({amount = 40, time = 0.5,
+			minpos = minp, maxpos=maxp,
+			minvel = vel_rain, maxvel = vel_rain,
+			minacc = acc_rain, maxacc = acc_rain,
+			minexptime = 0.8, maxexptime = 0.8,
+			minsize = 25, maxsize = 40,
+			collisiondetection = false, 
+			vertical = true, 
+			texture = "weather_rain_dark.png", 
+			playername = name})
 
-				if ran_t == 1 then
-					minetest.sound_play("mymonths_thunder", {
-					pos = ppos,
-					max_hear_distance = 10,
-					gain = 10.0,
-					})
+			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 then
+				if hp_t >=15 then
+					player:set_hp(hp-1)
+					hp_t = 0
 				end
+			end
+
+			if ran_t == 1 then
+				minetest.sound_play("mymonths_thunder", {
+				pos = ppos,
+				max_hear_distance = 10,
+				gain = 10.0,
+				})
+			end
 	elseif mymonths.weather2 == "rain" then
 		minetest.add_particlespawner({amount = 15, time = 0.5,
 			minpos = minp, maxpos = maxp,
@@ -257,6 +265,13 @@ minetest.register_globalstep(function(dtime)
 			vertical = true, 
 			texture = "weather_snow.png", 
 			playername = name})
+			
+			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 then
+				if hp_t >=15 then
+					player:set_hp(hp-1)
+					hp_t = 0
+				end
+			end
 
 	elseif mymonths.weather2 == "sandstorm" then
 		minetest.add_particlespawner({amount = 35, time = 0.5,
@@ -269,6 +284,13 @@ minetest.register_globalstep(function(dtime)
 			vertical = true, 
 			texture = "weather_sand.png", 
 			playername = name})
+			
+			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 then
+				if hp_t >=15 then
+					player:set_hp(hp-1)
+					hp_t = 0
+				end
+			end
 
 	elseif mymonths.weather2 == "hail" then
 		minetest.add_particlespawner({amount = 35, time = 0.5,
@@ -281,6 +303,13 @@ minetest.register_globalstep(function(dtime)
 			vertical = true, 
 			texture = "weather_hail.png", 
 			playername = name})
+		
+			if minetest.get_node_light({x=ppos.x,y=ppos.y+1,z=ppos.z}, 0.5) == 15 then
+				if hp_t >=15 then
+					player:set_hp(hp-1)
+					hp_t = 0
+				end
+			end
 	end
 
 	biome_jungle = nil
