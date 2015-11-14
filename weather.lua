@@ -8,7 +8,7 @@ local month = mymonths.month_counter
 		return
 	end
 	t = 0
-
+if mymonths.weather ~= "off" then
    	if 	mymonths.weather == "rain" or 
 		mymonths.weather == "storm" or 
 		mymonths.weather == "snow" or 
@@ -20,13 +20,13 @@ local month = mymonths.month_counter
 		end
 	else
 
-		if 		month == "1" then--January
+		if 		tonumber(month) == 1 then--January
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "snow"
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "snowstorm"
 				end
-		elseif 	month == "2" then--Febuary
+		elseif 	tonumber(month) == 2 then--Febuary
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "snow"
 				elseif math.random(1, 500) == 1 then
@@ -34,7 +34,7 @@ local month = mymonths.month_counter
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "hail"
 				end
-		elseif 	month == "3" then --March
+		elseif 	tonumber(month) == 3 then --March
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 250) == 2 then
@@ -42,53 +42,53 @@ local month = mymonths.month_counter
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "hail"
 				end
-		elseif 	month == "4" then --April
+		elseif 	tonumber(month) == 4 then --April
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "rain"
 				end
-		elseif 	month == "5" then --May
+		elseif 	tonumber(month) == 5 then --May
 				if math.random(1, 150) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif 	month == "6" then --June
+		elseif 	tonumber(month) == 6 then --June
 				if math.random(1, 200) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif 	month == "7" then --July
+		elseif 	tonumber(month) == 7 then --July
 				if math.random(1, 500) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif 	month == "8" then --Augest
+		elseif 	tonumber(month) == 8 then --Augest
 				if math.random(1, 500) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif 	month == "9" then --September
+		elseif 	tonumber(month) == 9 then --September
 				if math.random(1, 150) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 250) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif 	month == "10" then --October
+		elseif 	tonumber(month) == 10 then --October
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 250) == 1 then
 				mymonths.weather = "storm"
 				end
-		elseif 	month == "11" then --November
+		elseif 	tonumber(month) == 11 then --November
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 200) == 2 then
 				mymonths.weather = "snow"
 				end
-		elseif 	month == "12" then --December
+		elseif 	tonumber(month) == 12 then --December
 				if math.random(1, 250) == 1 then
 				mymonths.weather = "rain"
 				elseif math.random(1, 100) == 1 then
@@ -98,6 +98,7 @@ local month = mymonths.month_counter
 				end
 		end
 
+	end
 	end
 end)
 
@@ -109,6 +110,9 @@ end
 hp_t = 0
 minetest.register_globalstep(function(dtime)
 hp_t = hp_t + dtime
+if hp_t <= 0.2 then
+ return
+end
 
 	mymonths.weather2 = mymonths.weather
 	for _, player in ipairs(minetest.get_connected_players()) do

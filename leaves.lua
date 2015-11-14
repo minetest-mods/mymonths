@@ -86,7 +86,7 @@ minetest.register_abm({ --All leaves should be sticks in November and December
 	interval = 5,
 	chance = 1,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month == 'November' or mymonths.month == 'December'then
+		if mymonths.month == 'November' or mymonths.month == 'December' or mymonths.month == 'January' or mymonths.month == 'February' then
 			minetest.set_node(pos, {name = 'mymonths:leaves_sticks'})
 		end
 	end

@@ -1,20 +1,23 @@
 --Places Snow on ground
 if mymonths.snow_on_ground == true then
 minetest.register_abm({
-	nodenames = {"group:leaves","default:dirt","default:dirt_with_grass"},
+	nodenames = {"default:leaves","default:dirt","default:dirt_with_grass"},
 	neighbors = {"air","mymonths:puddle"},
 	interval = 5.0, 
 	chance = 40,
 	action = function (pos, node, active_object_count, active_object_count_wider)
+		local biome_jungle = minetest.find_node_near(pos, 5, "default:jungletree","default:junglegrass")
 		local na = minetest.get_node({x=pos.x,y=pos.y+1,z=pos.z})
 		if mymonths.weather2 == "snow" and
-			math.random(1,4) == 1 then
+			math.random(1,4) == 1 and
+			biome_jungle == nil then
 			if 		minetest.get_node_light({x=pos.x,y=pos.y+1,z=pos.z}, 0.5) == 15 and na.name == "air" then
 					minetest.set_node({x=pos.x,y=pos.y+1,z=pos.z}, {name="mymonths:snow_cover_1"})
 			elseif 	minetest.get_node({x=pos.x,y=pos.y+1,z=pos.z}) == "mymonths:puddle" then
 					minetest.set_node({x=pos.x,y=pos.y+1,z=pos.z}, {name="mymonths:snow_cover_1"})
 			end
-		elseif mymonths.weather2 == "snowstorm" then
+		elseif mymonths.weather2 == "snowstorm" and
+			biome_jungle == nil then
 			if 		minetest.get_node_light({x=pos.x,y=pos.y+1,z=pos.z}, 0.5) == 15 and na.name == "air" then
 					minetest.set_node({x=pos.x,y=pos.y+1,z=pos.z}, {name="mymonths:snow_cover_1"})
 			elseif 	minetest.get_node({x=pos.x,y=pos.y+1,z=pos.z}) == "mymonths:puddle" then
@@ -87,6 +90,7 @@ minetest.register_abm({
 		end
 	end
 })
+
 end
 
 if mymonths.use_puddles == true then

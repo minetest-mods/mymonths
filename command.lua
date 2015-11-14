@@ -18,7 +18,8 @@ minetest.register_chatcommand("setweather", {
 			param == "snowstorm" or 
 			param == "sandstorm" or
 			param == "hail" or
-			param == "clear" then
+			param == "clear" or
+			param == "off" then
 				mymonths.weather = param
 				mymonths.save_table()
 		else
