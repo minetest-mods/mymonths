@@ -2,7 +2,7 @@ Mod is by Don and Nathan
 
 Mymonths is licenced as WTFPL
 
-
+Fall leaf textures are modified from original default textures by Cisoun (WTFPL) and Paramat. (CC BY-SA 3.0)
 The rain and snow code comes from the weather mod
 from topic - https://forum.minetest.net/viewtopic.php?t=5245
 by Jeija
@@ -18,6 +18,7 @@ A Minetest year has 12 months with 2 weeks per month. Each week has 7 days.
 The weather is depended on the time of year. If it is winter then it will snow spring has rain etc. 
 Leaves turn color in the fall and the the tree will have no leaves or apples through the winter. 
 The leaves grow back in the spring and the apples later in the year.
+Acacia trees will bloom in January
 
 The desert and savannah biomes do not get rain or snow but do have sand storms.
 The snow biomes do not get rain.

@@ -70,10 +70,10 @@ local day = mymonths.day_counter
 			{6,	"June",			t3,t3},
 			{7,	"July",			t1,t5},
 			{8,	"Augest",		t1,t5},
-			{9,	"September",	t3,t3},
-			{10,"October",		t3,t3},
-			{11,"November",		t4,t2},
-			{12,"December",		t4,t2},
+			{9,	"September",		t3,t3},
+			{10,	"October",		t3,t3},
+			{11,	"November",		t4,t2},
+			{12,	"December",		t4,t2},
 			}
 			for i in ipairs(mon) do
 				local m1 = mon[i][1]
@@ -95,12 +95,12 @@ local day = mymonths.day_counter
 
 --Set the name of the day
    local days = {	{1,8,"Monday"},
-					{2,9,"Tuesday"},
-					{3,10,"Wednesday"},
-					{4,11,"Thursday"},
-					{5,12,"Friday"},
-					{6,13,"Saturday"},
-					{7,14,"Sunday"},}
+			{2,9,"Tuesday"},
+			{3,10,"Wednesday"},
+			{4,11,"Thursday"},
+			{5,12,"Friday"},
+			{6,13,"Saturday"},
+			{7,14,"Sunday"},}
 	for i in ipairs(days) do
 		local w1 = days[i][1]
 		local w2 = days[i][2]
