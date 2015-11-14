@@ -7,6 +7,7 @@ local t2 = 60 -- 12 min set to 60
 local t3 = 72 -- 10 min set to 72
 local t4 = 90 -- 8 min set to 90
 local t5 = 120 -- 6 min set to 120
+local day_changed = 0
 
 --Sets Month and length of day
 local timer = 0
@@ -24,11 +25,14 @@ local day = mymonths.day_counter
 	local time_in_seconds = minetest.get_timeofday() * 24000
 	if time_in_seconds >= daychange  and
 		time_in_seconds <= daychange + 200 then
-		mymonths.day_counter = mymonths.day_counter + 1
+		day_changed = day_changed + 1
+			if day_changed == 1 then
+				mymonths.day_counter = mymonths.day_counter + 1
+			end
 		if mymonths.day_counter >= mymonths.days_per_month +1 then 
 			mymonths.month_counter = mymonths.month_counter + 1
 		end
-		if mymonths.month_counter >= "13" then
+		if tonumber(mymonths.month_counter) >= 13 then
 			mymonths.month_counter = "1"
 			mymonths.day_counter = 1
 		end
@@ -91,6 +95,7 @@ local day = mymonths.day_counter
 		time_in_seconds <= night + 200 then
 		minetest.setting_set("time_speed", mymonths.night_speed)
 		minetest.set_timeofday(0.925)
+		day_changed = 0
    end
 
 --Set the name of the day

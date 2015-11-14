@@ -73,7 +73,7 @@ minetest.register_chatcommand("setday", {
 	func = function(name, param)
 		for day = 1,14 do
 			if tonumber(param) >= 15 then return end
-			if param == day then mymonths.day_counter = day end
+			if tonumber(param) == day then mymonths.day_counter = tonumber(day) end
 		end
 	end
 })
