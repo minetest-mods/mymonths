@@ -30,6 +30,8 @@ minetest.register_abm({ --leaves changing in September and October
 				minetest.set_node(pos, {name = 'mymonths:leaves_orange'})
 			elseif node.name == 'mymonths:leaves_orange' then
 				minetest.set_node(pos, {name = 'mymonths:leaves_red'})
+			elseif node.name == 'mymonths:leaves_red' then
+				minetest.set_node(pos, {name = 'mymonths:leaves_sticks'})
 			end
 		end
 	end

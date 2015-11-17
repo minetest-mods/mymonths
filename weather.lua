@@ -4,7 +4,7 @@ local t = 0
 minetest.register_globalstep(function(dtime)
 local month = mymonths.month_counter
 	t = t + dtime
-	if t < 5 then
+	if t < 10 then
 		return
 	end
 	t = 0
