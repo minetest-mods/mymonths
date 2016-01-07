@@ -2,19 +2,34 @@
 mymonths = {}
 
 --Turn damage on or off. This will make storms and hail cause damage
-mymonths.damage = minetest.setting_getbool("mymonths_damage")
+mymonths.damage = false
 
 --You can turn weather off 
-mymonths.use_weather = minetest.setting_getbool("mymonths_use_weather")
+mymonths.use_weather = true
 
 --Leaves change color in the fall.
-mymonths.leaves = minetest.setting_getbool("mymonths_leaves")
+mymonths.leaves = true
 
 --Have snow accumulate on the ground
-mymonths.snow_on_ground = minetest.setting_getbool("mymonths_snow_on_ground")
+mymonths.snow_on_ground = true
 
 --Puddles appear when raining
-mymonths.use_puddles = minetest.setting_getbool("mymonths_use_puddles")
+mymonths.use_puddles = true
+
+
+local modpath = minetest.get_modpath("mymonths")
+local input = io.open(modpath.."/settings.txt", "r")
+if input then
+	dofile(modpath.."/settings.txt")
+	input:close()
+	input = nil
+else
+mymonths.damage = false
+mymonths.use_weather = true
+mymonths.leaves = true
+mymonths.snow_on_ground = true
+mymonths.use_puddles = true
+end
 
 dofile(minetest.get_modpath("mymonths").."/functions.lua")
 dofile(minetest.get_modpath("mymonths").."/abms.lua")
