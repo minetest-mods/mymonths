@@ -60,6 +60,9 @@ minetest.register_chatcommand("setmonth", {
 			mymonths.month = "November"
 		elseif param == "12" or param == "December" or param == "december" or param == "dec"then 
 			mymonths.month = "December"
+		else
+		minetest.chat_send_player(name,"invalid input")
+			return
 		end
 		mymonths.month_counter = param
 		mymonths.save_table()
@@ -72,10 +75,13 @@ minetest.register_chatcommand("setday", {
 	description = "Set the day of the month",
 	privs = {mymonths = true},
 	func = function(name, param)
+	local d = tonumber(param)
+	if d then
 		for day = 1,14 do
 			if tonumber(param) >= 15 then return end
 			if tonumber(param) == day then mymonths.day_counter = tonumber(day) end
 		end
+	end
 	end
 })
 
