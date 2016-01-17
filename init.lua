@@ -69,7 +69,9 @@ if mymonths.leaves == false then
 	minetest.register_alias("mymonths:leaves_sticks", "default:leaves")
 end
 
-
+if minetest.get_modpath("thirsty") then
+	thirst = true
+end
 
 
 

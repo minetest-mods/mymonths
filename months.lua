@@ -43,7 +43,6 @@ local day = mymonths.day_counter
 		minetest.setting_set("time_speed", mymonths.day_speed)
 		minetest.set_timeofday(0.259)
 		minetest.chat_send_all("Good Morning! It is "..mymonths.day_name.." "..month.." "..day)
-
 --Holidays
 		local hol = {
 			{"12",	14,	"It is New Years Eve!"},
@@ -66,28 +65,32 @@ local day = mymonths.day_counter
 
 --Months
 		local mon = {
-			{1,	"January",		t5,t1},
-			{2,	"February",		t5,t1},
-			{3,	"March",		t4,t2},
-			{4,	"April",		t4,t2},
-			{5,	"May",			t3,t3},
-			{6,	"June",			t3,t3},
-			{7,	"July",			t1,t5},
-			{8,	"Augest",		t1,t5},
-			{9,	"September",		t3,t3},
-			{10,	"October",		t3,t3},
-			{11,	"November",		t4,t2},
-			{12,	"December",		t4,t2},
+			{1,	"January",		t5,t1,.9},
+			{2,	"February",		t5,t1,.9},
+			{3,	"March",		t4,t2,1},
+			{4,	"April",		t4,t2,1},
+			{5,	"May",			t3,t3,1},
+			{6,	"June",			t3,t3,1.1},
+			{7,	"July",			t1,t5,1.2},
+			{8,	"Augest",		t1,t5,1.5},
+			{9,	"September",		t3,t3,1},
+			{10,	"October",		t3,t3,1},
+			{11,	"November",		t4,t2,.9},
+			{12,	"December",		t4,t2,.9},
 			}
 			for i in ipairs(mon) do
 				local m1 = mon[i][1]
 				local m2 = mon[i][2]
 				local m3 = mon[i][3]
 				local m4 = mon[i][4]
+				local m5 = mon[i][5]
 				if mymonths.month_counter == m1 then
 					mymonths.month = m2
 					mymonths.day_speed = m3
 					mymonths.night_speed = m4
+					if thirst == true then --This effects the players thirst speed.
+						thirsty.set_thirst_factor(player, m5) --I'm assuming that a faster factor means getting thirsty faster???
+					end
 				end
 			end
 
