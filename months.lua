@@ -88,12 +88,12 @@ local day = mymonths.day_counter
 					mymonths.month = m2
 					mymonths.day_speed = m3
 					mymonths.night_speed = m4
-					if thirst == true then
-						for _,player in ipairs(minetest.get_connected_players()) do
-							local name = player:get_player_name()
-							thirsty.set_thirst_factor(name, m5)
-						end
-					end
+--					if thirst == true then
+--						for _,player in ipairs(minetest.get_connected_players()) do
+--							local players_names = player:get_player_name()
+--							thirsty.set_thirst_factor(players_names, m5)
+--						end
+--					end
 				end
 			end
 

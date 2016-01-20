@@ -16,6 +16,9 @@ mymonths.snow_on_ground = true
 --Puddles appear when raining
 mymonths.use_puddles = true
 
+--Flowers die in winter, grown in spring
+mymonths.flowers_die = true
+
 
 local modpath = minetest.get_modpath("mymonths")
 local input = io.open(modpath.."/settings.txt", "r")
@@ -67,6 +70,10 @@ if mymonths.leaves == false then
 	minetest.register_alias("mymonths:leaves_orange", "default:leaves")
 	minetest.register_alias("mymonths:leaves_red", "default:leaves")
 	minetest.register_alias("mymonths:leaves_sticks", "default:leaves")
+end
+
+if mymonths.flowers_die == true then
+	dofile(minetest.get_modpath("mymonths").."/flowers.lua")
 end
 
 if minetest.get_modpath("thirsty") then
