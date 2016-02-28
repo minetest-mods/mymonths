@@ -1,5 +1,5 @@
 --Nodes #################
-local leaves_table = {'pale_green', 'orange', 'red', 'sticks', 'blooms', 'acacia_blooms'}
+local leaves_table = {'pale_green', 'orange', 'red', 'sticks', 'blooms', 'acacia_blooms', 'orange_aspen', 'red_aspen'}
 
 for i, name in pairs (leaves_table) do
 	
@@ -18,7 +18,7 @@ minetest.register_node('mymonths:leaves_'..name, {
 end
 
 --ABMs ##################
-minetest.register_abm({ --leaves changing in September and October
+minetest.register_abm({ --leaves changing in September and October.
 	nodenames = {'group:leaves'},
 	interval = 60, 
 	chance = 40,
@@ -32,6 +32,10 @@ minetest.register_abm({ --leaves changing in September and October
 				minetest.set_node(pos, {name = 'mymonths:leaves_red'})
 			elseif node.name == 'mymonths:leaves_red' then
 				minetest.set_node(pos, {name = 'mymonths:leaves_sticks'})
+			elseif node.name == 'default:aspen_leaves' then
+				minetest.set_node(pos, {name = 'mymonths:leaves_orange_aspen'})
+			elseif node.name == 'mymonths:leaves_orange_aspen' then
+				minetest.set_node(pos, {name = 'mymonths:leaves_red_aspen'})
 			end
 		end
 	end
