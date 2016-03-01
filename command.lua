@@ -9,7 +9,7 @@ minetest.register_privilege("mymonths", {
 if mymonths.use_weather == true then
 minetest.register_chatcommand("setweather", {
 	params = "<mymonths>",
-	description = "Set weather to rain, snow, wind or none",
+	description = "Set weather to rain, snow, wind or clear",
 	privs = {mymonths = true},
 	func = function(name, param)
 	  	if 	param == "rain" or 
@@ -18,8 +18,7 @@ minetest.register_chatcommand("setweather", {
 			param == "snowstorm" or 
 			param == "sandstorm" or
 			param == "hail" or
-			param == "clear" or
-			param == "off" then
+			param == "clear" then
 				mymonths.weather = param
 				mymonths.save_table()
 		else
@@ -36,32 +35,32 @@ minetest.register_chatcommand("setmonth", {
 	description = "Set the month. Use the number 1-12 or the name",
 	privs = {mymonths = true},
 	func = function(name, param)
-		if param == "1" or param == "January" or param == "january" or param == "jan" then 
+		if param == "1" then --or param == "January" or param == "january" or param == "jan" then 
 			mymonths.month = "January"
-		elseif param == "2" or param == "Febuary" or param == "febuary" or param == "feb" then 
+		elseif param == "2" then --or param == "Febuary" or param == "febuary" or param == "feb" then 
 			mymonths.month = "Febuary"
-		elseif param == "3" or param == "March" or param == "march" or param == "mar" then 
+		elseif param == "3" then --or param == "March" or param == "march" or param == "mar" then 
 			mymonths.month = "March"
-		elseif param == "4" or param == "April" or param == "april" or param == "apr" then 
+		elseif param == "4" then --or param == "April" or param == "april" or param == "apr" then 
 			mymonths.month = "April"
-		elseif param == "5" or param == "May" or param == "may" then 
+		elseif param == "5" then --or param == "May" or param == "may" then 
 			mymonths.month = "May"
-		elseif param == "6" or param == "June" or param == "june" or param == "jun" then 
+		elseif param == "6" then --or param == "June" or param == "june" or param == "jun" then 
 			mymonths.month = "June"
-		elseif param == "7" or param == "July" or param == "july" or param == "jul" then 
+		elseif param == "7" then --or param == "July" or param == "july" or param == "jul" then 
 			mymonths.month = "July"
-		elseif param == "8" or param == "Augest" or param == "augest" or param == "aug" then 
+		elseif param == "8" then --or param == "Augest" or param == "augest" or param == "aug" then 
 			mymonths.month = "Augest"
-		elseif param == "9" or param == "September" or param == "september" or param == "sept" then 
+		elseif param == "9" then --or param == "September" or param == "september" or param == "sept" then 
 			mymonths.month = "September"
-		elseif param == "10" or param == "October" or param == "october" or param == "oct" then 
+		elseif param == "10" then --or param == "October" or param == "october" or param == "oct" then 
 			mymonths.month = "October"
-		elseif param == "11" or param == "November" or param == "november" or param == "nov" then 
+		elseif param == "11" then --or param == "November" or param == "november" or param == "nov" then 
 			mymonths.month = "November"
-		elseif param == "12" or param == "December" or param == "december" or param == "dec"then 
+		elseif param == "12" then --or param == "December" or param == "december" or param == "dec"then 
 			mymonths.month = "December"
 		else
-		minetest.chat_send_player(name,"invalid input")
+		minetest.chat_send_player(name,"invalid input - Please use numbers 1 - 12")
 			return
 		end
 		mymonths.month_counter = param

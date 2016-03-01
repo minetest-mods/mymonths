@@ -4,43 +4,47 @@ local t = 0
 minetest.register_globalstep(function(dtime)
 local month = mymonths.month_counter
 	t = t + dtime
-	if t < 10 then
+	if t < 60 then
 		return
 	end
 	t = 0
-if mymonths.weather ~= "off" then
-   	if 	mymonths.weather == "rain" or 
-		mymonths.weather == "storm" or 
-		mymonths.weather == "snow" or 
-		mymonths.weather == "snowstorm" or 
-		mymonths.weather == "sandstorm" or
-		mymonths.weather == "hail" then
-		if math.random(1, 500) == 1 then
+
+if mymonths.weather ~= "clear" then
+		if math.random(1, 10) == 1 then
 			mymonths.weather = "clear"
+				minetest.chat_send_all("Clear skys!")
 		end
 	else
 
 		if 		tonumber(month) == 1 then--January
-				if math.random(1, 100) == 1 then
+				if math.random(1, 20) == 1 then
 				mymonths.weather = "snow"
-				elseif math.random(1, 500) == 1 then
+				minetest.chat_send_all("It is Snowing")
+				elseif math.random(1, 50) == 1 then
 				mymonths.weather = "snowstorm"
+				minetest.chat_send_all("It's a Snow Storm")
 				end
 		elseif 	tonumber(month) == 2 then--Febuary
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "snow"
+				minetest.chat_send_all("It is Snowing")
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "snowstorm"
+				minetest.chat_send_all("It's a Snow storm")
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "hail"
+				minetest.chat_send_all("It is Hailing")
 				end
 		elseif 	tonumber(month) == 3 then --March
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("It is Raining")
 				elseif math.random(1, 250) == 2 then
 				mymonths.weather = "snow"
+				minetest.chat_send_all("It is Snowing")
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "hail"
+				minetest.chat_send_all("It is Hailing")
 				end
 		elseif 	tonumber(month) == 4 then --April
 				if math.random(1, 100) == 1 then
@@ -49,56 +53,72 @@ if mymonths.weather ~= "off" then
 		elseif 	tonumber(month) == 5 then --May
 				if math.random(1, 150) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("It is Raining")
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
+				minetest.chat_send_all("It's a Storm")
 				end
 		elseif 	tonumber(month) == 6 then --June
-				if math.random(1, 200) == 1 then
+				if math.random(1, 500) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("It is Raining")
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
+				minetest.chat_send_all("It's a Storm")
 				end
 		elseif 	tonumber(month) == 7 then --July
 				if math.random(1, 500) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("It is Raining")
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
+				minetest.chat_send_all("It's a Storm")
 				end
 		elseif 	tonumber(month) == 8 then --Augest
 				if math.random(1, 500) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("It is Raining")
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "storm"
+				minetest.chat_send_all("It's a Storm")
 				end
 		elseif 	tonumber(month) == 9 then --September
 				if math.random(1, 150) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("It is Raining")
 				elseif math.random(1, 250) == 1 then
 				mymonths.weather = "storm"
+				minetest.chat_send_all("It's a Storm")
 				end
 		elseif 	tonumber(month) == 10 then --October
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("It is Raining")
 				elseif math.random(1, 250) == 1 then
 				mymonths.weather = "storm"
+				minetest.chat_send_all("It's a Storm")
 				end
 		elseif 	tonumber(month) == 11 then --November
 				if math.random(1, 100) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("It is Raining")
 				elseif math.random(1, 200) == 2 then
 				mymonths.weather = "snow"
+				minetest.chat_send_all("It is Snowing")
 				end
 		elseif 	tonumber(month) == 12 then --December
 				if math.random(1, 250) == 1 then
 				mymonths.weather = "rain"
+				minetest.chat_send_all("It is Raining")
 				elseif math.random(1, 100) == 1 then
 				mymonths.weather = "snow"
+				minetest.chat_send_all("It is Snowing")
 				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "hail"
+				minetest.chat_send_all("It is Hailing")
 				end
 		end
-
-	end
+--	end
 	end
 end)
 
