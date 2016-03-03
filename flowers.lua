@@ -3,7 +3,7 @@ minetest.register_abm({ --Flowers die in late fall
 	interval = 10, 
 	chance = 10,
 	action = function (pos)
-		if mymonths.month == 'October' or mymonths.month == 'November' then
+		if mymonths.month_counter == '10' or mymonths.month_counter == '11' then
 			minetest.set_node(pos, {name = 'air'})
 		end
 	end
@@ -14,7 +14,7 @@ minetest.register_abm({ --Flowers grow in spring, flower spread ABM is in flower
 	interval = 240,
 	chance = 100,
 	action = function (pos)
-		if mymonths.month == 'March' or mymonths.month == 'April' then
+		if mymonths.month == '3' or mymonths.month == '4' then
 			local pos0 = {x=pos.x-4,y=pos.y-4,z=pos.z-4}
 			local pos1 = {x=pos.x+4,y=pos.y+4,z=pos.z+4}
 			local flowers = minetest.find_nodes_in_area(pos0, pos1, "group:flower")
