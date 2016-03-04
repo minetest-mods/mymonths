@@ -35,32 +35,56 @@ minetest.register_chatcommand("setmonth", {
 	description = "Set the month. Use the number 1-12 or the name",
 	privs = {mymonths = true},
 	func = function(name, param)
-		if param == "1" then --or param == "January" or param == "january" or param == "jan" then 
+		if param == "1" or param == "January" or param == "january" or param == "jan" then 
 			mymonths.month = "January"
-		elseif param == "2" then --or param == "Febuary" or param == "febuary" or param == "feb" then 
+			mymonths.month_counter = 1
+		minetest.chat_send_player(name,"Month has been changed to January")
+		elseif param == "2" or param == "Febuary" or param == "febuary" or param == "feb" then 
 			mymonths.month = "Febuary"
-		elseif param == "3" then --or param == "March" or param == "march" or param == "mar" then 
+			mymonths.month_counter = 2
+		minetest.chat_send_player(name,"Month has been changed to Febuary")
+		elseif param == "3" or param == "March" or param == "march" or param == "mar" then 
 			mymonths.month = "March"
-		elseif param == "4" then --or param == "April" or param == "april" or param == "apr" then 
+			mymonths.month_counter = 3
+		minetest.chat_send_player(name,"Month has been changed to March")
+		elseif param == "4" or param == "April" or param == "april" or param == "apr" then 
 			mymonths.month = "April"
-		elseif param == "5" then --or param == "May" or param == "may" then 
+			mymonths.month_counter = 4
+		minetest.chat_send_player(name,"Month has been changed to April")
+		elseif param == "5" or param == "May" or param == "may" then 
 			mymonths.month = "May"
-		elseif param == "6" then --or param == "June" or param == "june" or param == "jun" then 
+			mymonths.month_counter = 5
+		minetest.chat_send_player(name,"Month has been changed to May")
+		elseif param == "6" or param == "June" or param == "june" or param == "jun" then 
 			mymonths.month = "June"
-		elseif param == "7" then --or param == "July" or param == "july" or param == "jul" then 
+			mymonths.month_counter = 6
+		minetest.chat_send_player(name,"Month has been changed to June")
+		elseif param == "7" or param == "July" or param == "july" or param == "jul" then 
 			mymonths.month = "July"
-		elseif param == "8" then --or param == "Augest" or param == "augest" or param == "aug" then 
+			mymonths.month_counter = 7
+		minetest.chat_send_player(name,"Month has been changed to July")
+		elseif param == "8" or param == "Augest" or param == "augest" or param == "aug" then 
 			mymonths.month = "Augest"
-		elseif param == "9" then --or param == "September" or param == "september" or param == "sept" then 
+			mymonths.month_counter = 8
+		minetest.chat_send_player(name,"Month has been changed to Augest")
+		elseif param == "9" or param == "September" or param == "september" or param == "sept" then 
 			mymonths.month = "September"
-		elseif param == "10" then --or param == "October" or param == "october" or param == "oct" then 
+			mymonths.month_counter = 9
+		minetest.chat_send_player(name,"Month has been changed to September")
+		elseif param == "10" or param == "October" or param == "october" or param == "oct" then 
 			mymonths.month = "October"
-		elseif param == "11" then --or param == "November" or param == "november" or param == "nov" then 
+			mymonths.month_counter = 10
+		minetest.chat_send_player(name,"Month has been changed to October")
+		elseif param == "11" or param == "November" or param == "november" or param == "nov" then 
 			mymonths.month = "November"
-		elseif param == "12" then --or param == "December" or param == "december" or param == "dec"then 
+			mymonths.month_counter = 11
+		minetest.chat_send_player(name,"Month has been changed to November")
+		elseif param == "12" or param == "December" or param == "december" or param == "dec"then 
 			mymonths.month = "December"
+			mymonths.month_counter = 12
+		minetest.chat_send_player(name,"Month has been changed to December")
 		else
-		minetest.chat_send_player(name,"invalid input - Please use numbers 1 - 12")
+		minetest.chat_send_player(name,"invalid input")
 			return
 		end
 		mymonths.month_counter = param

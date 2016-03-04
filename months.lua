@@ -38,8 +38,9 @@ local day = mymonths.day_counter
 			mymonths.month_counter = mymonths.month_counter + 1
 			mymonths.day_counter = 1
 	end
-
-	if tonumber(mymonths.month_counter) >= 13 then
+	if tonumber(mymonths.month_counter) == nil then 
+	mymonths.monthcounter = 6 
+	elseif tonumber(mymonths.month_counter) >= 13 then
 			mymonths.month_counter = 1
 			mymonths.day_counter = 1
 	end
