@@ -4,7 +4,7 @@ local t = 0
 minetest.register_globalstep(function(dtime)
 local month = mymonths.month_counter
 	t = t + dtime
-	if t < 60 then
+	if t < 5 then
 		return
 	end
 	t = 0
@@ -17,10 +17,10 @@ if mymonths.weather ~= "clear" then
 	else
 
 		if 		tonumber(month) == 1 then--January
-				if math.random(1, 20) == 1 then
+				if math.random(1, 200) == 1 then
 				mymonths.weather = "snow"
 				minetest.chat_send_all("It is Snowing")
-				elseif math.random(1, 50) == 1 then
+				elseif math.random(1, 500) == 1 then
 				mymonths.weather = "snowstorm"
 				minetest.chat_send_all("It's a Snow Storm")
 				end
