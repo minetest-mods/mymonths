@@ -12,7 +12,7 @@ local month = mymonths.month_counter
 if mymonths.weather ~= "clear" then
 		if math.random(1, 100) == 1 then
 			mymonths.weather = "clear"
-				minetest.chat_send_all("Clear skys!"..minetest.get_timeofday())
+				minetest.chat_send_all("Clear skys!")
 		end
 	else
 
