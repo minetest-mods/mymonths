@@ -69,7 +69,8 @@ if mymonths.leaves == false then
 	minetest.register_alias("mymonths:leaves_pale_green", "default:leaves")
 	minetest.register_alias("mymonths:leaves_orange", "default:leaves")
 	minetest.register_alias("mymonths:leaves_red", "default:leaves")
-	minetest.register_alias("mymonths:leaves_sticks", "default:leaves")
+	minetest.register_alias("mymonths:sticks_default", "default:leaves")
+	minetest.register_alias("mymonths:sticks_aspen", "default:aspen_leaves")
 end
 
 if mymonths.flowers_die == true then
