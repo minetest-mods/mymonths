@@ -126,6 +126,12 @@ minetest.register_chatcommand("date", {
 	func = function(name, param)
 	local t = tostring(minetest.get_timeofday() * 2400)
 	local tt = string.find(t, "%p",1)
+	minetest.chat_send_all(tt)
+		if tt == nil then
+			tt = "0"
+		end
+	
+	minetest.chat_send_all(tt)
 	local th = string.sub(t, tt-4,tt-3)
 	local tm = string.sub(t, tt-2,tt-1)
 	local m = (tm/100)*60
