@@ -88,7 +88,7 @@ minetest.register_abm({ --All leaves should be red by mid October
 	interval = 5,
 	chance = 1,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month_counter == '10' and
+		if mymonths.month_counter == 10 and
 			mymonths.day_counter >= 8 then
 			minetest.set_node(pos, {name = 'mymonths:leaves_red'})
 		end
@@ -100,7 +100,7 @@ minetest.register_abm({ --leaves 'falling/dying' in October
 	interval = 60, 
 	chance = 40,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month_counter == '10' then
+		if mymonths.month_counter == 10 then
 			if node.name == 'mymonths:leaves_red' then
 				minetest.set_node(pos, {name = 'mymonths:sticks_default'})
 			elseif node.name == 'mymonths:leaves_red_aspen' then
@@ -115,7 +115,7 @@ minetest.register_abm({ --All default leaves should be sticks in November and De
 	interval = 5,
 	chance = 1,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month_counter == '11' or mymonths.month_counter == '12' or mymonths.month_counter == '1' or mymonths.month_counter == '2' then
+		if mymonths.month_counter == 11 or mymonths.month_counter == 12 or mymonths.month_counter == 1 or mymonths.month_counter == 2 then
 			minetest.set_node(pos, {name = 'mymonths:sticks_default'})
 		end
 	end
@@ -126,7 +126,7 @@ minetest.register_abm({ --All aspen eaves should be sticks in November and Decem
 	interval = 5,
 	chance = 1,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month_counter == '11' or mymonths.month_counter == '12' or mymonths.month_counter == '1' or mymonths.month_counter == '2' then
+		if mymonths.month_counter == 11 or mymonths.month_counter == 12 or mymonths.month_counter == 1 or mymonths.month_counter == 2 then
 			minetest.set_node(pos, {name = 'mymonths:sticks_aspen'})
 		end
 	end
@@ -137,7 +137,7 @@ minetest.register_abm({ --New growth in spring
 	interval = 60, 
 	chance = 40,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month_counter == '3' or mymonths.month_counter == '4' then
+		if mymonths.month_counter == 3 or mymonths.month_counter == 4 then
 			if node.name == 'mymonths:sticks_default' then
 				minetest.set_node(pos, {name = 'mymonths:leaves_blooms'})
 			elseif node.name == 'mymonths:leaves_blooms' then
@@ -156,7 +156,7 @@ minetest.register_abm({ --By April all trees should be back to normal
 	interval = 5,
 	chance = 1,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month_counter == '5' then
+		if mymonths.month_counter == 5 then
 			if node.name == 'mymonths:sticks_default' or node.name == 'mymonths:leaves_blooms' then
 				minetest.set_node(pos, {name = 'default:leaves'})
 			elseif node.name =='mymonths:sticks_aspen' or node.name == 'mymonths:leaves_aspen_blooms' then
@@ -175,7 +175,7 @@ minetest.register_abm({ --apples die in November
 		local nodeu2 = minetest.get_node({x=pos.x,y=pos.y-2,z=pos.z})
 		local nodeu3 = minetest.get_node({x=pos.x,y=pos.y-3,z=pos.z})
 		local nodeu4 = minetest.get_node({x=pos.x,y=pos.y-4,z=pos.z})
-		if mymonths.month_counter == '11' then
+		if mymonths.month_counter == 11 then
 			if nodeu1.name == "air" then
 				minetest.spawn_item({x=pos.x,y=pos.y-1,z=pos.z}, 'default:apple')
 				minetest.set_node(pos,{name = 'mymonths:sticks_default'})
@@ -200,7 +200,7 @@ minetest.register_abm({ --apples grow in fall
 	interval = 60,
 	chance = 15,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month_counter == '7' or mymonths.month_counter == '8' or mymonths.month_counter == '9' then
+		if mymonths.month_counter == 7 or mymonths.month_counter == 8 or mymonths.month_counter == 9 then
 			local a = minetest.find_node_near(pos, 3, 'default:apple')
 			if a == nil then
 				minetest.set_node(pos,{name = 'default:apple'})
@@ -214,7 +214,7 @@ minetest.register_abm({ --apples change to leaves or sticks is not in season
 	interval = 1,
 	chance = 1,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month_counter == '12' or mymonths.month_counter == '1' or mymonths.month_counter == '2' then
+		if mymonths.month_counter == 12 or mymonths.month_counter == 1 or mymonths.month_counter == 2 then
 				minetest.set_node(pos,{name = 'mymonths:sticks_default'})
 		elseif mymonths.month_counter == '3' or mymonths.month_counter == '4' then
 				minetest.set_node(pos,{name = 'mymonths:leaves_blooms'})
@@ -229,7 +229,7 @@ minetest.register_abm ({ --Acacia blooming
 	interval = 60,
 	chance = 15,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month_counter == '1' then
+		if mymonths.month_counter == 1 then
 				minetest.set_node(pos,{name = 'mymonths:leaves_acacia_blooms'})
 			end
 		end
@@ -240,7 +240,7 @@ minetest.register_abm ({ --Acacia blooming
 	interval = 15,
 	chance = 1,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month_counter == '2' then
+		if mymonths.month_counter == 2 then
 				minetest.set_node(pos,{name = 'default:acacia_leaves'})
 			end
 		end
