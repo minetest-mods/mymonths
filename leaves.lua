@@ -40,7 +40,7 @@ minetest.register_abm({ --leaves changing in September and October.
 	interval = 60, 
 	chance = 40,
 	action = function (pos, node, active_object_count, active_object_count_wider)
-		if mymonths.month_counter == '9' or mymonths.month_counter == '10' then
+		if mymonths.month_counter == 9 or mymonths.month_counter == 10 then
 			if node.name == 'default:leaves' then
 				minetest.set_node(pos, {name = 'mymonths:leaves_pale_green'})
 			elseif node.name == 'mymonths:leaves_pale_green' then
