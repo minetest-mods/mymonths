@@ -198,8 +198,6 @@ minetest.register_globalstep(function(dtime)
 		return
 	end
 
---	hp_t = 0 -- is this needed or was it missing on purpose ?
-
 	mymonths.weather2 = mymonths.weather
 
 	for _, player in ipairs(minetest.get_connected_players()) do
@@ -210,23 +208,22 @@ minetest.register_globalstep(function(dtime)
 		local nodein = minetest.get_node(ppos)
 		local nodeu = minetest.get_node({x = ppos.x, y = ppos.y - 1, z = ppos.z})
 		
-		local biome_jungle = minetest.find_node_near(ppos, 5, "default:jungletree","default:junglegrass")
-		local biome_desert = minetest.find_node_near(ppos, 5, "default:desert_sand","default:desert_stone")
-		local biome_snow = minetest.find_node_near(ppos, 5, "default:snow","default:snowblock","default:dirt_with_snow","default:ice")
+		local biome_jungle = minetest.find_node_near(ppos, 5, "default:jungletree", "default:junglegrass")
+		local biome_desert = minetest.find_node_near(ppos, 5, "default:desert_sand", "default:desert_stone")
+		local biome_snow = minetest.find_node_near(ppos, 5, "default:snow", "default:snowblock", "default:dirt_with_snow", "default:ice")
 		
-		local minp = addvectors(ppos, {x=-10, y=7, z=-10})
-		local maxp = addvectors(ppos, {x= 10, y=7, z= 10})
-		local minps = addvectors(ppos, {x=-15, y=0, z=-10})
-		local maxps = addvectors(ppos, {x= 5, y=3, z= 10})
-		local minp_deep = addvectors(ppos, {x=-10, y=3.2, z=-10})
-		local maxp_deep = addvectors(ppos, {x= 10, y=2.6, z= 10})
-		local vel_rain = {x=0, y=-4, z=0}
-		local acc_rain = {x=0, y=-9.81, z=0}
-		local vel_snow = {x=0, y=-0.4, z=0}
-		local acc_snow = {x=0, y=-0.5, z=0}
-		local vel_sand = {x=1, y=-0.1, z=0}
-		local acc_sand = {x=2, y=0, z=0}
-		local ran_s = math.random(1,6)
+		local minp = addvectors(ppos, {x = -10, y = 7, z = -10})
+		local maxp = addvectors(ppos, {x = 10, y = 7, z = 10})
+		local minps = addvectors(ppos, {x =-15, y = 0, z = -10})
+		local maxps = addvectors(ppos, {x = 5, y = 3, z = 10})
+		local minp_deep = addvectors(ppos, {x = -10, y = 3.2, z = -10})
+		local maxp_deep = addvectors(ppos, {x = 10, y = 2.6, z = 10})
+		local vel_rain = {x = 0, y = -4, z = 0}
+		local acc_rain = {x = 0, y = -9.81, z = 0}
+		local vel_snow = {x = 0, y = -0.4, z = 0}
+		local acc_snow = {x = 0, y = -0.5, z = 0}
+		local vel_sand = {x = 1, y = -0.1, z = 0}
+		local acc_sand = {x = 2, y = 0, z = 0}
 
 		-- slows players walk in snow
 		if nodein.name == "mymonths:snow_cover_1" then
@@ -255,7 +252,7 @@ minetest.register_globalstep(function(dtime)
 		-- check light to make sure player is outside
 		if minetest.get_node_light({
 			x = ppos.x,
-			y = ppos.y +1,
+			y = ppos.y + 1,
 			z = ppos.z}, 0.5) ~= 15 then
 
 			return
@@ -313,8 +310,6 @@ minetest.register_globalstep(function(dtime)
 	
 		if mymonths.weather2 == "storm" then
 
-			local ran_t = math.random(1,200)
-
 			minetest.add_particlespawner({
 				amount = 40,
 				time = 0.5,
@@ -340,13 +335,14 @@ minetest.register_globalstep(function(dtime)
 				z = ppos.z}, 0.5) == 15
 			and mymonths.damage == true then
 
-				if hp_t >=15 then
-					player:set_hp(hp-1)
+				if hp_t >= 15 then
+					player:set_hp(hp - 1)
 					hp_t = 0
 				end
 			end
 
-			if ran_t == 1 then
+			if math.random(1, 200) == 1 then
+
 				minetest.sound_play("mymonths_thunder", {
 					pos = ppos,
 					max_hear_distance = 10,
@@ -461,7 +457,7 @@ minetest.register_globalstep(function(dtime)
 				z =ppos.z}, 0.5) == 15
 			and mymonths.damage == true then
 
-				if hp_t >=15 then
+				if hp_t >= 15 then
 					player:set_hp(hp - 1)
 					hp_t = 0
 				end
@@ -494,8 +490,8 @@ minetest.register_globalstep(function(dtime)
 				z = ppos.z}, 0.5) == 15
 			and mymonths.damage == true then
 
-				if hp_t >=15 then
-					player:set_hp(hp-1)
+				if hp_t >= 15 then
+					player:set_hp(hp - 1)
 					hp_t = 0
 				end
 			end
@@ -527,21 +523,21 @@ minetest.register_globalstep(function(dtime)
 				z = ppos.z}, 0.5) == 15
 			and mymonths.damage == true then
 
-				if hp_t >=15 then
-					player:set_hp(hp-1)
+				if hp_t >= 15 then
+					player:set_hp(hp - 1)
 					hp_t = 0
 				end
 			end
 		end
 
-	biome_jungle = nil
-	biome_snow = nil
-	biome_desert = nil
+		biome_jungle = nil
+		biome_snow = nil
+		biome_desert = nil
 
 	end
 end)
 
-t2 = 0
+local t2 = 0
 
 minetest.register_globalstep(function(dtime)
 
@@ -551,10 +547,14 @@ minetest.register_globalstep(function(dtime)
 
 		t2 = t2 + dtime
 
-		if t2 >= 1
-		and mymonths.weather2 == "rain" then
+		if t2 < 1 then
+			return
+		end
 
-			t2 = 0
+		t2 = 0
+
+		if mymonths.weather2 == "rain"
+		or mymonths.weather2 == "storm" then
 
 			minetest.sound_play("mymonths_rain1", {
 				pos = ppos,

@@ -24,6 +24,9 @@ local days = {
 	{7, 14, "Sunday"},
 }
 
+-- this stops undeclared variable errors
+local t1, t2, t3, t4, t5 = 0, 0, 0, 0, 0
+
 -- Set months
 local mon = {
 	{1,  "January",  t5, t1, .9},
