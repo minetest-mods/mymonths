@@ -61,8 +61,8 @@ minetest.register_globalstep(function(dtime)
 --Day Night Speeds (Thanks to sofar for this)
 	local x = tonumber(mymonths.day_counter)
 	local ratio = ((math.cos((x / 168) * 2 * math.pi) * 0.4) / 2.0) + 0.5
-	local nightratio = 72/(ratio*2)
-	local dayratio =  72*(ratio*2)
+	local nightratio = math.floor(72/(ratio*2))
+	local dayratio =  math.floor(72*(ratio*2))
 
 	--Checks for morning
 	local time_in_seconds = minetest.get_timeofday() * 24000
@@ -100,7 +100,7 @@ minetest.register_globalstep(function(dtime)
 	and gm == 1 then
 		minetest.setting_set("time_speed", dayratio)
 		minetest.chat_send_all("Good Morning! It is "..mymonths.day_name.." "..mymonths.month.." "..mymonths.day_counter)
-		minetest.chat_send_all("Time speed is "..dayratio.." and "..nightratio)
+		--minetest.chat_send_all("Time speed is "..dayratio.." and "..nightratio)
 
 		---Holidays
 		for i in ipairs(hol) do
@@ -133,15 +133,6 @@ minetest.register_globalstep(function(dtime)
 			mymonths.month = m2
 			mymonths.day_speed = m3
 			mymonths.night_speed = m4
-
-	--		if thirst == true then
-
-	--			for _,player in ipairs(minetest.get_connected_players()) do
-
-	--				local players_names = player:get_player_name()
-	--				thirsty.set_thirst_factor(players_names, m5)
-	--			end
-	--		end
 		end
 	end
 
