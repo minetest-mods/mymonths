@@ -59,7 +59,7 @@ minetest.register_globalstep(function(dtime)
 	timer = 0
 
 --Day Night Speeds (Thanks to sofar for this)
-	local x = tonumber(mymonths.day_counter)
+	local x = tonumber(mymonths.day_counter)*tonumber(mymonths.month_counter)
 	local ratio = ((math.cos((x / 168) * 2 * math.pi) * 0.4) / 2.0) + 0.5
 	local nightratio = math.floor(72/(ratio*2))
 	local dayratio =  math.floor(72*(ratio*2))
