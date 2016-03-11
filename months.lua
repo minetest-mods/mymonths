@@ -1,10 +1,3 @@
-local daychange = 1
-local tseconds = 3
-local t1 = 52 -- 14 min set to 52
-local t2 = 60 -- 12 min set to 60
-local t3 = 72 -- 10 min set to 72
-local t4 = 90 -- 8 min set to 90
-local t5 = 120 -- 6 min set to 120
 local timechange = 0
 local gm = 0
 local gn = 0
@@ -52,10 +45,6 @@ local timer = 0
 
 minetest.register_globalstep(function(dtime)
 
-	local month = mymonths.month
-	local monthn = mymonths.month_counter
-	local day = mymonths.day_counter
-
 	-- Checks every X seconds
 	timer = timer + dtime
 
@@ -66,7 +55,7 @@ minetest.register_globalstep(function(dtime)
 
 	timer = 0
 
---Day Night Speeds
+--Day Night Speeds (Thanks to sofar for this)
 	local x = tonumber(mymonths.day_counter)
 	local ratio = ((math.cos((x / 168) * 2 * math.pi) * 0.4) / 2.0) + 0.5
 	local nightratio = 72/(ratio*2)
@@ -107,8 +96,8 @@ minetest.register_globalstep(function(dtime)
 	and time_in_seconds <= 12000
 	and gm == 1 then
 		minetest.setting_set("time_speed", dayratio)
-		minetest.chat_send_all("Good Morning! It is "..mymonths.day_name.." "..month.." "..day)
-		--minetest.chat_send_all("Time speed is "..mymonths.day_speed.." and "..mymonths.night_speed)
+		minetest.chat_send_all("Good Morning! It is "..mymonths.day_name.." "..mymonths.month.." "..mymonths.day_counter)
+		minetest.chat_send_all("Time speed is "..dayratio.." and "..nightratio)
 
 		---Holidays
 		for i in ipairs(hol) do
@@ -117,8 +106,8 @@ minetest.register_globalstep(function(dtime)
 			local h2 = hol[i][2]
 			local h3 = hol[i][3]
 
-			if monthn == h1
-			and day == h2 then
+			if mymonths.month_counter == h1
+			and mymonths.day_counter == h2 then
 				minetest.chat_send_all(h3)
 			end
 		end
