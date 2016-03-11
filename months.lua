@@ -108,7 +108,7 @@ minetest.register_globalstep(function(dtime)
 	and gm == 1 then
 		minetest.setting_set("time_speed", dayratio)
 		minetest.chat_send_all("Good Morning! It is "..mymonths.day_name.." "..month.." "..day)
-		minetest.chat_send_all("Time speed is "..mymonths.day_speed.." and "..mymonths.night_speed)
+		--minetest.chat_send_all("Time speed is "..mymonths.day_speed.." and "..mymonths.night_speed)
 
 		---Holidays
 		for i in ipairs(hol) do
