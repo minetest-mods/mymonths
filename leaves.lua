@@ -38,7 +38,7 @@ minetest.register_node('mymonths:sticks_' .. name, {
 })
 end
 
---ABMs ##################
+--ABMs and LBMs ##################
 
 --leaves changing in September and October.
 minetest.register_abm({
@@ -82,55 +82,6 @@ minetest.register_abm({
 	end
 })
 
---All leaves should be pale green by mid September
-minetest.register_abm({
-	nodenames = {'default:leaves'},
-	interval = 5,
-	chance = 1,
-
-	action = function (pos, node, active_object_count, active_object_count_wider)
-
-		if mymonths.month_counter == 9
-		and mymonths.day_counter >= 8 then
-
-			minetest.set_node(pos, {name = 'mymonths:leaves_pale_green'})
-		end
-	end
-})
-
---All leaves should be orange by October
-minetest.register_abm({
-	nodenames = {'default:leaves', 'mymonths:leaves_pale_green'},
-	interval = 5,
-	chance = 1,
-
-	action = function (pos, node, active_object_count, active_object_count_wider)
-
-		if mymonths.month_counter == 10
-		and tonumber(mymonths.day_counter) >= 1
-		and tonumber(mymonths.day_counter) <= 7 then
-
-			minetest.set_node(pos, {name = 'mymonths:leaves_orange'})
-		end
-	end
-})
-
---All leaves should be red by mid October
-minetest.register_abm({
-	nodenames = {'default:leaves', 'mymonths:leaves_pale_green','mymonths:leaves_orange'},
-	interval = 5,
-	chance = 1,
-
-	action = function (pos, node, active_object_count, active_object_count_wider)
-
-		if mymonths.month_counter == 10
-		and mymonths.day_counter >= 8 then
-
-			minetest.set_node(pos, {name = 'mymonths:leaves_red'})
-		end
-	end
-})
-
 --leaves 'falling/dying' in October
 minetest.register_abm({
 	nodenames = {'mymonths:leaves_red', 'mymonths:leaves_red_aspen'},
@@ -149,42 +100,6 @@ minetest.register_abm({
 
 				minetest.set_node(pos, {name = 'mymonths:sticks_aspen'})
 			end
-		end
-	end
-})
-
---All default leaves should be sticks in November and December
-minetest.register_abm({
-	nodenames = {'default:leaves', 'mymonths:leaves_pale_green', 'mymonths:leaves_orange', 'mymonths:leaves_red'},
-	interval = 5,
-	chance = 1,
-
-	action = function (pos, node, active_object_count, active_object_count_wider)
-
-		if mymonths.month_counter == 11
-		or mymonths.month_counter == 12
-		or mymonths.month_counter == 1
-		or mymonths.month_counter == 2 then
-
-			minetest.set_node(pos, {name = 'mymonths:sticks_default'})
-		end
-	end
-})
-
---All aspen leaves should be sticks in November and December
-minetest.register_abm({
-	nodenames = {'default:aspen_leaves', 'mymonths:leaves_orange_aspen', 'mymonths:leaves_red_aspen',},
-	interval = 5,
-	chance = 1,
-
-	action = function (pos, node, active_object_count, active_object_count_wider)
-
-		if mymonths.month_counter == 11
-		or mymonths.month_counter == 12
-		or mymonths.month_counter == 1
-		or mymonths.month_counter == 2 then
-
-			minetest.set_node(pos, {name = 'mymonths:sticks_aspen'})
 		end
 	end
 })
@@ -213,30 +128,6 @@ minetest.register_abm({
 				minetest.set_node(pos, {name = 'mymonths:leaves_aspen_blooms'})
 
 			elseif node.name == 'mymonths:leaves_aspen_blooms' then
-
-				minetest.set_node(pos, {name = 'default:aspen_leaves'})
-			end
-		end
-	end
-})
-
---By April all trees should be back to normal
-minetest.register_abm({
-	nodenames = {'mymonths:sticks_default', 'mymonths:leaves_blooms', 'mymonths:sticks_aspen', 'mymonths:leaves_aspen_blooms'},
-	interval = 5,
-	chance = 1,
-
-	action = function (pos, node, active_object_count, active_object_count_wider)
-
-		if mymonths.month_counter == 5 then
-
-			if node.name == 'mymonths:sticks_default'
-			or node.name == 'mymonths:leaves_blooms' then
-
-				minetest.set_node(pos, {name = 'default:leaves'})
-
-			elseif node.name =='mymonths:sticks_aspen'
-			or node.name == 'mymonths:leaves_aspen_blooms' then
 
 				minetest.set_node(pos, {name = 'default:aspen_leaves'})
 			end
@@ -302,78 +193,592 @@ minetest.register_abm({
 	end
 })
 
---apples grow in fall
+
 minetest.register_abm({
-	nodenames = {'default:leaves'},
+	nodenames = {'default:leaves','default:acacia_leaves'},
 	interval = 60,
 	chance = 15,
 
 	action = function (pos, node, active_object_count, active_object_count_wider)
 
-		if mymonths.month_counter == 7
-		or mymonths.month_counter == 8
-		or mymonths.month_counter == 9 then
+	local n = node.name
 
-			local a = minetest.find_node_near(pos, 3, 'default:apple')
+		if n == 'default:leaves' then
 
-			if a == nil then
-				minetest.set_node(pos,{name = 'default:apple'})
+			if mymonths.month_counter == 6
+			or mymonths.month_counter == 7
+			or mymonths.month_counter == 8
+			or mymonths.month_counter == 9 then
+
+				local a = minetest.find_node_near(pos, 3, 'default:apple')
+
+				if a == nil then
+					minetest.set_node(pos,{name = 'default:apple'})
+				end
 			end
+
 		end
+
+		if n == 'default:acacia_leaves' then
+
+			if mymonths.month_counter == 1 then
+				minetest.set_node(pos,{name = 'mymonths:leaves_acacia_blooms'})
+			end
+
+		end
+
 	end
 })
 
---apples change to leaves or sticks is not in season
-minetest.register_abm({
-	nodenames = {'default:apple'},
-	interval = 1,
-	chance = 1,
+--Leaf changing LBM
+minetest.register_lbm({
+	name = "mymonths:change_leaves",
 
-	action = function (pos, node, active_object_count, active_object_count_wider)
+	nodenames = {'default:leaves', 'mymonths:leaves_pale_green','mymonths:leaves_orange',
+				'mymonths:leaves_red', 'mymonths:sticks_default', 'mymonths:leaves_blooms',
+				'default:aspen_leaves', 'mymonths:leaves_aspen_blooms', 'mymonths:leaves_orange_aspen',
+				'mymonths:leaves_red_aspen', 'mymonths:sticks_aspen',
+				'default:acacia_leaves', 'mymonths:leaves_acacia_blooms'},
 
-		if mymonths.month_counter == 12
-		or mymonths.month_counter == 1
-		or mymonths.month_counter == 2 then
+	run_at_every_load = true,
 
-			minetest.set_node(pos,{name = 'mymonths:sticks_default'})
+	action = function (pos, node)
 
-		elseif mymonths.month_counter == 3
-		or mymonths.month_counter == 4 then
+		local n = node.name
+		local month = tonumber(mymonths.month_counter)
+		local day = tonumber(mymonths.day_counter)
 
-			minetest.set_node(pos,{name = 'mymonths:leaves_blooms'})
+-- January
+		if month == 1 then
 
-		elseif mymonths.month_counter == 5
-		or mymonths.month_counter == 6 then
+			-- Default Leaves
+			if n == 'default:leaves'
+			or n == 'mymonths:leaves_blooms'
+			or n == 'mymonths:leaves_pale_green'
+			or n == 'mymonths:leaves_orange'
+			or n == 'mymonths:leaves_red' then
 
-			minetest.set_node(pos,{name = 'default:leaves'})
+				minetest.set_node(pos, {name = 'mymonths:sticks_default'})
+
+			end
+
+			-- Aspen Leaves
+			if n == 'default:aspen_leaves'
+			or n == 'mymonths:leaves_aspen_blooms'
+			or n == 'mymonths:leaves_yellow_aspen'
+			or n == 'mymonths:leaves_orange_aspen'
+			or n == 'mymonths:leaves_red_aspen' then
+
+				minetest.set_node(pos, {name = 'mymonths:sticks_aspen'})
+
+			end
+
+			-- Acacia Leaves
+			if n == 'default:acacia_leaves' then
+
+				minetest.set_node(pos,{name = 'mymonths:leaves_acacia_blooms'})
+
+			end
+
+			-- Apples
+			if n == 'default:apple' then
+
+				minetest.set_node(pos,{name = 'mymonths:sticks_default'})
+
+			end
+
 		end
-	end
-})
 
---Acacia blooming
-minetest.register_abm ({
-	nodenames = {'default:acacia_leaves'},
-	interval = 60,
-	chance = 15,
+-- Feburary
+		if month == 2 then
 
-	action = function (pos, node, active_object_count, active_object_count_wider)
+			-- Default Leaves
+			if n == 'default:leaves'
+			or n == 'mymonths:leaves_blooms'
+			or n == 'mymonths:leaves_pale_green'
+			or n == 'mymonths:leaves_orange'
+			or n == 'mymonths:leaves_red' then
 
-		if mymonths.month_counter == 1 then
-			minetest.set_node(pos,{name = 'mymonths:leaves_acacia_blooms'})
+				minetest.set_node(pos, {name = 'mymonths:sticks_default'})
+
+			end
+
+			-- Aspen Leaves
+			if n == 'default:aspen_leaves'
+			or n == 'mymonths:leaves_aspen_blooms'
+			or n == 'mymonths:leaves_yellow_aspen'
+			or n == 'mymonths:leaves_orange_aspen'
+			or n == 'mymonths:leaves_red_aspen' then
+
+				minetest.set_node(pos, {name = 'mymonths:sticks_aspen'})
+
+			end
+
+			-- Acacia Leaves
+			if n == 'default:acacia_leaves' then
+
+				minetest.set_node(pos,{name = 'mymonths:leaves_acacia_blooms'})
+
+			end
+
+			-- Apples
+			if n == 'default:apple' then
+
+				minetest.set_node(pos,{name = 'mymonths:sticks_default'})
+
+			end
+
 		end
-	end
-})
 
---Acacia blooming
-minetest.register_abm ({
-	nodenames = {'mymonths:leaves_acacia_blooms'},
-	interval = 15,
-	chance = 1,
+-- March
+		if month == 3 then
 
-	action = function (pos, node, active_object_count, active_object_count_wider)
+			-- Default Leaves
+			if n == 'default:leaves'
+			or n == 'mymonths:leaves_pale_green'
+			or n == 'mymonths:leaves_orange'
+			or n == 'mymonths:leaves_red' then
 
-		if mymonths.month_counter == 2 then
-			minetest.set_node(pos,{name = 'default:acacia_leaves'})
+				minetest.set_node(pos, {name = 'mymonths:sticks_default'})
+
+			end
+
+			-- Aspen Leaves
+			if n == 'default:aspen_leaves'
+			or n == 'mymonths:leaves_aspen_blooms'
+			or n == 'mymonths:leaves_yellow_aspen'
+			or n == 'mymonths:leaves_orange_aspen'
+			or n == 'mymonths:leaves_red_aspen' then
+
+				minetest.set_node(pos, {name = 'mymonths:sticks_aspen'})
+
+			end
+
+			-- Acacia Leaves
+			if n == 'mymonths:leaves_acacia_blooms' then
+
+				minetest.set_node(pos,{name = 'default:acacia_leaves'})
+
+			end
+
+			-- Apples
+			if n == 'default:apple' then
+
+				minetest.set_node(pos,{name = 'mymonths:leaves_blooms'})
+
+			end
+
 		end
-	end
+
+-- April
+		if month == 4 then
+
+			-- Default Leaves
+			if n == 'mymonths:sticks_default'
+			or n == 'mymonths:leaves_pale_green'
+			or n == 'mymonths:leaves_orange'
+			or n == 'mymonths:leaves_red' then
+
+				minetest.set_node(pos, {name = 'default:leaves'})
+
+			end
+
+			-- Aspen Leaves
+			if n == 'default:aspen_leaves'
+			or n == 'mymonths:sticks_aspen'
+			or n == 'mymonths:leaves_yellow_aspen'
+			or n == 'mymonths:leaves_orange_aspen'
+			or n == 'mymonths:leaves_red_aspen' then
+
+				minetest.set_node(pos, {name = 'mymonths:leaves_aspen_blooms'})
+
+			end
+
+			-- Acacia Leaves
+			if n == 'mymonths:leaves_acacia_blooms' then
+
+				minetest.set_node(pos,{name = 'default:acacia_leaves'})
+
+			end
+
+			-- Apples
+			if n == 'default:apple' then
+
+				minetest.set_node(pos,{name = 'mymonths:leaves_blooms'})
+
+			end
+
+		end
+
+-- May
+		if month == 5 then
+
+			-- Default Leaves
+			if n == 'mymonths:sticks_default'
+			or n == 'mymonths:leaves_pale_green'
+			or n == 'mymonths:leaves_orange'
+			or n == 'mymonths:leaves_red' then
+
+				minetest.set_node(pos, {name = 'default:leaves'})
+
+			end
+
+			-- Aspen Leaves
+			if n == 'mymonths:leaves_aspen_blooms'
+			or n == 'mymonths:sticks_aspen'
+			or n == 'mymonths:leaves_yellow_aspen'
+			or n == 'mymonths:leaves_orange_aspen'
+			or n == 'mymonths:leaves_red_aspen' then
+
+				minetest.set_node(pos, {name = 'default:aspen_leaves'})
+
+			end
+
+			-- Acacia Leaves
+			if n == 'mymonths:leaves_acacia_blooms' then
+
+				minetest.set_node(pos,{name = 'default:acacia_leaves'})
+
+			end
+
+			-- Apples
+			if n == 'default:apple' then
+
+				minetest.set_node(pos,{name = 'default:leaves'})
+
+			end
+
+		end
+
+-- June
+		if month == 6 then
+
+			-- Default Leaves
+			if n == 'mymonths:sticks_default'
+			or n == 'mymonths:leaves_pale_green'
+			or n == 'mymonths:leaves_orange'
+			or n == 'mymonths:leaves_red' then
+
+				minetest.set_node(pos, {name = 'default:leaves'})
+
+			end
+
+			-- Aspen Leaves
+			if n == 'mymonths:leaves_aspen_blooms'
+			or n == 'mymonths:sticks_aspen'
+			or n == 'mymonths:leaves_yellow_aspen'
+			or n == 'mymonths:leaves_orange_aspen'
+			or n == 'mymonths:leaves_red_aspen' then
+
+				minetest.set_node(pos, {name = 'default:aspen_leaves'})
+
+			end
+
+			-- Acacia Leaves
+			if n == 'mymonths:leaves_acacia_blooms' then
+
+				minetest.set_node(pos,{name = 'default:acacia_leaves'})
+
+			end
+
+			-- Apples
+			-- Nothing Happens
+
+		end
+
+-- July
+		if month == 7 then
+
+			-- Default Leaves
+			if n == 'mymonths:sticks_default'
+			or n == 'mymonths:leaves_pale_green'
+			or n == 'mymonths:leaves_orange'
+			or n == 'mymonths:leaves_red' then
+
+				minetest.set_node(pos, {name = 'default:leaves'})
+
+			end
+
+			-- Aspen Leaves
+			if n == 'mymonths:leaves_aspen_blooms'
+			or n == 'mymonths:sticks_aspen'
+			or n == 'mymonths:leaves_yellow_aspen'
+			or n == 'mymonths:leaves_orange_aspen'
+			or n == 'mymonths:leaves_red_aspen' then
+
+				minetest.set_node(pos, {name = 'default:aspen_leaves'})
+
+			end
+
+			-- Acacia Leaves
+			if n == 'mymonths:leaves_acacia_blooms' then
+
+				minetest.set_node(pos,{name = 'default:acacia_leaves'})
+
+			end
+
+			-- Apples
+			-- Nothing Happens
+
+		end
+
+-- Augest
+		if month == 8 then
+
+			-- Default Leaves
+			if n == 'mymonths:sticks_default'
+			or n == 'mymonths:leaves_pale_green'
+			or n == 'mymonths:leaves_orange'
+			or n == 'mymonths:leaves_red' then
+
+				minetest.set_node(pos, {name = 'default:leaves'})
+
+			end
+
+			-- Aspen Leaves
+			if n == 'mymonths:leaves_aspen_blooms'
+			or n == 'mymonths:sticks_aspen'
+			or n == 'mymonths:leaves_yellow_aspen'
+			or n == 'mymonths:leaves_orange_aspen'
+			or n == 'mymonths:leaves_red_aspen' then
+
+				minetest.set_node(pos, {name = 'default:aspen_leaves'})
+
+			end
+
+			-- Acacia Leaves
+			if n == 'mymonths:leaves_acacia_blooms' then
+
+				minetest.set_node(pos,{name = 'default:acacia_leaves'})
+
+			end
+
+			-- Apples
+			-- Nothing Happens
+
+		end
+
+-- September
+		if month == 9 then
+
+			-- Default Leaves
+			if day >= 1
+			and day <= 7 then
+
+				if n == 'mymonths:sticks_default' then
+
+					minetest.set_node(pos, {name = 'default:leaves'})
+
+				end
+
+			end
+
+			if day >=8
+			and day <=14 then
+
+				if n == 'mymonths:sticks_default'
+				or n == 'default:leaves' then
+
+					minetest.set_node(pos, {name = 'mymonths:leaves_pale_green'})
+
+				end
+
+			end
+
+			-- Aspen Leaves
+			if day >= 1
+			and day <=7 then
+
+				if n == 'mymonths:sticks_aspen'
+				or n == 'mymonths:leaves_aspen_blooms' then
+
+					minetest.set_node(pos, {name = 'default:aspen_leaves'})
+
+				end
+
+			end
+
+			if day >=8
+			and day <=14 then
+
+				if n == 'mymonths:sticks_aspen'
+				or n == 'mymonths:leaves_aspen_blooms'
+				or n == 'default:aspen_leaves' then
+
+					minetest.set_node(pos, {name = 'mymonths:leaves_yellow'})
+
+				end
+
+			end
+
+			-- Acacia Leaves
+			if n == 'mymonths:leaves_acacia_blooms' then
+
+				minetest.set_node(pos,{name = 'default:acacia_leaves'})
+
+			end
+
+			-- Acacia Leaves
+			if n == 'mymonths:leaves_acacia_blooms' then
+
+				minetest.set_node(pos,{name = 'default:acacia_leaves'})
+
+			end
+
+			-- Apples
+			-- Nothing Happens
+
+		end
+
+-- October
+		if month == 10 then
+
+			-- Default Leaves
+			if day >= 1
+			and day <=7 then
+
+				if n == 'mymonths:sticks_default' 
+				or n == 'default:leaves'
+				or n == 'mymonths:leaves_pale_green' then
+
+					minetest.set_node(pos, {name = 'mymonths:leaves_orange'})
+
+				end
+
+			end
+
+			if day >=8
+			and day <=14 then
+
+				if n == 'default:leaves'
+				or n == 'mymonths:leaves_pale_green'
+				or n == 'mymonths:leaves_orange' then
+
+					minetest.set_node(pos, {name = 'mymonths:leaves_red'})
+
+				end
+
+			end
+
+			-- Aspen Leaves
+			if day >= 1
+			and day <=7 then
+
+				if n == 'mymonths:sticks_aspen' 
+				or n == 'mymonths:leaves_yellow_aspen'
+				or n == 'mymonths:leaves_aspen_blooms'
+				or n == 'default:aspen_leaves' then
+
+					minetest.set_node(pos, {name = 'mymonths:leaves_orange_aspen'})
+
+				end
+
+			end
+
+			if day >=8
+			and day <=14 then
+
+				if n == 'mymonths:sticks_aspen'
+				or n == 'mymonths:leaves_yellow_aspen'
+				or n == 'mymonths:leaves_orange_aspen'
+				or n == 'mymonths:leaves_aspen_blooms'
+				or n == 'default:aspen_leaves' then
+
+					minetest.set_node(pos, {name = 'mymonths:leaves_red'})
+
+				end
+
+			end
+
+			-- Acacia Leaves
+			if n == 'mymonths:leaves_acacia_blooms' then
+
+				minetest.set_node(pos,{name = 'default:acacia_leaves'})
+
+			end
+
+			-- Apples
+			-- Nothing Happens
+
+		end
+
+-- November
+		if month == 11 then
+
+			-- Default Leaves
+			if n == 'default:leaves'
+			or n == 'mymonths:leaves_blooms'
+			or n == 'mymonths:leaves_pale_green'
+			or n == 'mymonths:leaves_orange'
+			or n == 'mymonths:leaves_red' then
+
+				minetest.set_node(pos, {name = 'mymonths:sticks_default'})
+
+			end
+
+			-- Aspen Leaves
+			if n == 'default:aspen_leaves'
+			or n == 'mymonths:leaves_aspen_blooms'
+			or n == 'mymonths:leaves_yellow_aspen'
+			or n == 'mymonths:leaves_orange_aspen'
+			or n == 'mymonths:leaves_red_aspen' then
+
+				minetest.set_node(pos, {name = 'mymonths:sticks_aspen'})
+
+			end
+
+			-- Acacia Leaves
+			if n == 'mymonths:leaves_acacia_blooms' then
+
+				minetest.set_node(pos,{name = 'default:acacia_leaves'})
+
+			end
+
+			-- Apples
+			-- Nothing Happens
+
+		end
+
+-- December
+		if month == 12 then
+
+			-- Default Leaves
+			if n == 'default:leaves'
+			or n == 'mymonths:leaves_blooms'
+			or n == 'mymonths:leaves_pale_green'
+			or n == 'mymonths:leaves_orange'
+			or n == 'mymonths:leaves_red' then
+
+				minetest.set_node(pos, {name = 'mymonths:sticks_default'})
+
+			end
+
+			-- Aspen Leaves
+			if n == 'default:aspen_leaves'
+			or n == 'mymonths:leaves_aspen_blooms'
+			or n == 'mymonths:leaves_yellow_aspen'
+			or n == 'mymonths:leaves_orange_aspen'
+			or n == 'mymonths:leaves_red_aspen' then
+
+				minetest.set_node(pos, {name = 'mymonths:sticks_aspen'})
+
+			end
+
+			-- Acacia Leaves
+			if n == 'mymonths:leaves_acacia_blooms' then
+
+				minetest.set_node(pos,{name = 'default:acacia_leaves'})
+
+			end
+
+			-- Apples
+			if n == 'default:apple' then
+
+				minetest.set_node(pos,{name = 'mymonths:sticks_default'})
+
+			end
+
+		end
+
+	end -- ends function
 })
