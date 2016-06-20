@@ -1,0 +1,22 @@
+Year
+12 months
+14 days per month
+2 weeks per month
+7 days per week
+4 seasons
+42 days per season
+
+function month(day)
+ return  (((day - 35) % 168) / (168/12)) + 1
+ end
+
+
+what needs saved
+
+day_counter
+month
+month_counter
+season
+
+day_speed
+night_speed

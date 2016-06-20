@@ -19,6 +19,9 @@ mymonths.use_puddles = true
 --Flowers die in winter, grown in spring
 mymonths.flowers_die = true
 
+--Grass changes color in fall, and spring
+mymonths.grass_change = true
+
 if minetest.get_modpath("lightning") then 
 	lightning.auto = false 
 end
@@ -47,6 +50,10 @@ dofile(minetest.get_modpath("mymonths") .. "/months.lua")
 
 if mymonths.use_weather == true then
 	dofile(minetest.get_modpath("mymonths").."/weather.lua")
+end
+
+if mymonths.grass_change == true then
+	dofile(minetest.get_modpath("mymonths").."/grass.lua")
 end
 
 if mymonths.use_weather == false then
