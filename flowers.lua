@@ -25,8 +25,8 @@ minetest.register_abm({
 	action = function (pos)
 
 		-- return if not march or april
-		if mymonths.month ~= 3
-		or mymonths.month ~= 4 then
+		if mymonths.month_counter ~= 3
+		or mymonths.month_counter ~= 4 then
 			return
 		end
 
