@@ -3,7 +3,7 @@
 if mymonths.snow_on_ground == true then
 
 minetest.register_abm({
-	nodenames = {"default:leaves", "default:dirt", "default:dirt_with_grass"},
+	nodenames = {"group:leaves", "group:soil"},
 	neighbors = {"air"},
 	interval = 8,
 	chance = 20,
@@ -55,8 +55,8 @@ minetest.register_abm({
 
 -- Changes snow to larger snow
 minetest.register_abm({
-	nodenames = {"mymonths:snow_cover_1", "mymonths:snow_cover_2", "mymonths:snow_cover_3", "mymonths:snow_cover_4"},
-	neighbors = {"default:dirt", "default:dirt_with_grass"},
+	nodenames = {"mymonths:snow_cover_1", "mymonths:snow_cover_2", "mymonths:snow_cover_3", "mymonths:snow_cover_4", "default:snow"},
+	neighbors = {"group:soil", "default:snowblock"},
 	interval = 20,
 	chance = 40,
 
@@ -74,7 +74,7 @@ minetest.register_abm({
 
 					minetest.set_node(pos, {name = "mymonths:snow_cover_2"})
 
-				elseif node.name == "mymonths:snow_cover_2" then
+				elseif node.name == "mymonths:snow_cover_2" or node.name == "default:snow" then
 
 					minetest.set_node(pos, {name = "mymonths:snow_cover_3"})
 
@@ -85,6 +85,10 @@ minetest.register_abm({
 				elseif node.name == "mymonths:snow_cover_4" then
 
 					minetest.set_node(pos, {name = "mymonths:snow_cover_5"})
+
+				elseif node.name == "mymonths:snow_cover_5" then
+
+					minetest.set_node(pos, {name = "default:snowblock"})
 				end
 			end
 	end
@@ -92,7 +96,7 @@ minetest.register_abm({
 
 -- Snow Melting
 minetest.register_abm({
-	nodenames = {"mymonths:snow_cover_1", "mymonths:snow_cover_2", "mymonths:snow_cover_3", "mymonths:snow_cover_4", "mymonths:snow_cover_5"},
+	nodenames = {"mymonths:snow_cover_1", "mymonths:snow_cover_2", "mymonths:snow_cover_3", "mymonths:snow_cover_4", "mymonths:snow_cover_5", "default:snowblock"},
 	interval = 10,
 	chance = 1,
 
@@ -128,6 +132,10 @@ minetest.register_abm({
 
 				minetest.set_node(pos, {name = "mymonths:snow_cover_4"})
 
+			elseif node.name == "defalt:snowblock" then
+
+				minetest.set_node(pos, {name = "mymonths:snow_cover_5"})
+
 			elseif node.name == "mymonths:snow_cover_1" then
 
 				local nu = minetest.get_node({x = pos.x, y = pos.y - 1, z = pos.z})
@@ -150,7 +158,7 @@ if mymonths.use_puddles == true then
 
 -- Makes Puddles when raining
 minetest.register_abm({
-	nodenames = {"default:dirt", "default:dirt_with_grass"},
+	nodenames = {"group:soil"},
 	neighbors = {"default:air"},
 	interval = 10,
 	chance = 50,
