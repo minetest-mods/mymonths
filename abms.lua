@@ -158,6 +158,7 @@ minetest.register_abm({
 -- Snow Melting
 minetest.register_abm({
 	nodenames = {"mymonths:snow_cover_1", "mymonths:snow_cover_2", "mymonths:snow_cover_3", "mymonths:snow_cover_4", "mymonths:snow_cover_5", "default:snowblock", "default:snow"},
+	neighbors = {"air"},
 	interval = 10,
 	chance = 1,
 
@@ -177,7 +178,14 @@ minetest.register_abm({
 
 		if math.random(1, 100) == 1 then
 
-			if node.name == "mymonths:snow_cover_2" or "default:snow" then
+			-- check if there is any blocks above it
+			while minetest.get_node_or_nil({x=pos.x, y=pos.y + 1, z=pos.z}) and
+				 minetest.get_node_or_nil({x=pos.x, y=pos.y + 1, z=pos.z}).name ~= "air" do
+				pos.y = pos.y + 1
+				node = minetest.get_node_or_nil(pos)
+			end
+
+			if node.name == "mymonths:snow_cover_2" or node.name == "default:snow" then
 
 				minetest.set_node(pos, {name = "mymonths:snow_cover_1"})
 
@@ -193,7 +201,7 @@ minetest.register_abm({
 
 				minetest.set_node(pos, {name = "mymonths:snow_cover_4"})
 
-			elseif node.name == "defalt:snowblock" then
+			elseif node.name == "default:snowblock" then
 
 				minetest.set_node(pos, {name = "mymonths:snow_cover_5"})
 
