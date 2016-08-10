@@ -135,6 +135,8 @@ minetest.register_abm({
 					
 					local depth = 2
 
+					local snow_biome = minetest.find_node_near(pos, 5, {"default:ice"})
+
 					-- checks the number of snow blocks below to determine if snow is too deep
 					local count = 0
 					for i = 1, depth do
@@ -147,7 +149,7 @@ minetest.register_abm({
 						end
 					end
 
-					if level_snow(pos, node, 0) and count ~= depth then
+					if level_snow(pos, node, 0) and (count ~= depth or snow_biome) then
 						minetest.set_node(pos, {name = "default:snowblock"})
 					end
 				end
@@ -167,6 +169,12 @@ minetest.register_abm({
 		if mymonths.month_counter == 12
 		or mymonths.month_counter == 1
 		or mymonths.month_counter == 2 then
+			return
+		end
+
+		-- check if in a snow biome
+		local snow_biome = minetest.find_node_near(pos, 5, {"default:ice"})
+		if snow_biome ~= nil then
 			return
 		end
 
