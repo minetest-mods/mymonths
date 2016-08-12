@@ -1,0 +1,23 @@
+{
+    "name": "My months",
+    "description": "Adds a calender and weather.",
+    "keywords": [
+		"mymonths",
+		"weather",
+		"summer",
+		"spring",
+		"winter",
+		"calendar"
+    ],
+    "project": "https://github.com/minetest-mods/mymonths",
+    "forum": "https://forum.minetest.net/viewtopic.php?f=9&t=13639",
+    "screenshots": [
+        "http://i68.tinypic.com/xaosqo.jpg",
+		"http://i67.tinypic.com/143m7ab.jpg",
+		"http://i67.tinypic.com/2mmyh5c.jpg",
+		"http://i67.tinypic.com/epeibm.jpg"
+    ],
+    "authors": [
+        "DonBatman"
+    ]
+}
