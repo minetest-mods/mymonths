@@ -1,3 +1,20 @@
+local function is_inside(pos)
+
+	if minetest.get_node_light({x=pos.x,y=pos.y+1,z=pos.z}, 0.5) ~= 15 then
+		return true
+	end
+	
+	local temp_node = minetest.get_node_or_nil({x=pos.x,y=pos.y+1,z=pos.z})
+
+	for i = 2,50 do
+		if temp_node ~= nil and temp_node.name ~= "air" then
+			return true
+		end
+		temp_node = minetest.get_node_or_nil({x=pos.x,y=pos.y+i,z=pos.z})
+	end
+	return false
+end
+
 
 --Sets the weather types for each month
 local t = 0
@@ -208,9 +225,10 @@ minetest.register_globalstep(function(dtime)
 		local nodein = minetest.get_node(ppos)
 		local nodeu = minetest.get_node({x = ppos.x, y = ppos.y - 1, z = ppos.z})
 		
-		local biome_jungle = minetest.find_node_near(ppos, 5, "default:jungletree", "default:junglegrass")
-		local biome_desert = minetest.find_node_near(ppos, 5, "default:desert_sand", "default:desert_stone")
-		local biome_snow = minetest.find_node_near(ppos, 5, "default:snow", "default:snowblock", "default:dirt_with_snow", "default:ice")
+		local biome_jungle = minetest.find_node_near(ppos, 8, "default:jungletree", "default:junglegrass")
+		local biome_desert = minetest.find_node_near(ppos, 8, "default:desert_sand", "default:desert_stone")
+		local biome_snow = minetest.find_node_near(ppos, 8, "default:snow", "default:snowblock", "default:dirt_with_snow",
+					 "default:ice", "default:pine_tree", "mymonths:snow_cover_5")
 		
 		local minp = addvectors(ppos, {x = -10, y = 7, z = -10})
 		local maxp = addvectors(ppos, {x = 10, y = 7, z = 10})
@@ -249,17 +267,13 @@ minetest.register_globalstep(function(dtime)
 			player:set_physics_override(1, 1, 1, true, false)
 		end
 
-		-- check light to make sure player is outside
-		if minetest.get_node_light({
-			x = ppos.x,
-			y = ppos.y + 1,
-			z = ppos.z}, 0.5) ~= 15 then
-
+		-- checks if there is any weather
+		if mymonths.weather2 == "none" then
 			return
 		end
 
-		-- checks if there is any weather
-		if mymonths.weather2 == "none" then
+		-- check light to make sure player is outside
+		if is_inside(ppos) then
 			return
 		end
 
@@ -329,11 +343,7 @@ minetest.register_globalstep(function(dtime)
 				playername = name
 			})
 
-			if minetest.get_node_light({
-				x = ppos.x,
-				y = ppos.y + 1,
-				z = ppos.z}, 0.5) == 15
-			and mymonths.damage == true then
+			if not is_inside(ppos) and mymonths.damage == true then
 
 				if hp_t >= 15 then
 					player:set_hp(hp - 1)
@@ -451,12 +461,7 @@ minetest.register_globalstep(function(dtime)
 				playername = name
 			})
 
-			if minetest.get_node_light({
-				x = ppos.x,
-				y = ppos.y + 1,
-				z =ppos.z}, 0.5) == 15
-			and mymonths.damage == true then
-
+			if not is_inside(ppos) and mymonths.damage == true then
 				if hp_t >= 15 then
 					player:set_hp(hp - 1)
 					hp_t = 0
@@ -484,12 +489,7 @@ minetest.register_globalstep(function(dtime)
 				playername = name
 			})
 
-			if minetest.get_node_light({
-				x = ppos.x,
-				y = ppos.y + 1,
-				z = ppos.z}, 0.5) == 15
-			and mymonths.damage == true then
-
+			if not is_inside(ppos) and mymonths.damage == true then
 				if hp_t >= 15 then
 					player:set_hp(hp - 1)
 					hp_t = 0
@@ -517,12 +517,7 @@ minetest.register_globalstep(function(dtime)
 				playername = name
 			})
 
-			if minetest.get_node_light({
-				x = ppos.x,
-				y = ppos.y + 1,
-				z = ppos.z}, 0.5) == 15
-			and mymonths.damage == true then
-
+			if not is_inside(ppos) and mymonths.damage == true then
 				if hp_t >= 15 then
 					player:set_hp(hp - 1)
 					hp_t = 0

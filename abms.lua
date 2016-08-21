@@ -43,6 +43,23 @@ local function level_snow(pos, node, depth)
 	return true
 end
 
+local function get_melt_prob(pos)
+	local list1 = minetest.find_nodes_in_area({x=pos.x-3,y=pos.y-2,z=pos.z-3},
+		{x=pos.x+3,y=pos.y+1,z=pos.z+3},{"default:ice", "default:snowblock"})
+	local list2 = minetest.find_nodes_in_area({x=pos.x-3,y=pos.y-2,z=pos.z-3},
+		{x=pos.x+3,y=pos.y+1,z=pos.z+3},{"mymonths:snow_cover_5",
+		"mymonths:snow_cover_4","mymonths:snow_cover_3","mymonths:snow_cover_2","mymonths:snow_cover_1"})
+	local list3 = minetest.find_nodes_in_area({x=pos.x-3,y=pos.y-2,z=pos.z-3},
+		{x=pos.x+3,y=pos.y+1,z=pos.z+3},{"default:dirt_with_snow", "default:pine_tree"})
+	-- list1 is snow blocks and ice, list 2 is snow cover nodes, list3 is snow dirt and pine trees
+	local count = 2.25 * table.getn(list1) + table.getn(list2) + 2 * table.getn(list3)
+	local prob = 1 - count/196
+	prob = math.max(tonumber(string.format("%.2f", prob * 10)), 0.01)
+	prob = 1 / (prob / 200)
+	prob = math.min(tonumber(string.format("%04d", prob)), 1000)
+	return prob
+end
+
 
 --Places Snow on ground
 if mymonths.snow_on_ground == true then
@@ -172,19 +189,13 @@ minetest.register_abm({
 			return
 		end
 
-		-- check if in a snow biome
-		local snow_biome = minetest.find_node_near(pos, 5, {"default:ice"})
-		if snow_biome ~= nil then
+		local melt_prob = get_melt_prob(pos)
+
+		if melt_prob == 1000 then
 			return
 		end
 
-		-- remove snow if month is april
-		if mymonths.month_counter == 4 then
-			minetest.remove_node(pos)
-			return
-		end
-
-		if math.random(1, 100) == 1 then
+		if math.random(1, melt_prob) == 1 then
 
 			-- check if there is any blocks above it
 			while minetest.get_node_or_nil({x=pos.x, y=pos.y + 1, z=pos.z}) and
