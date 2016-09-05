@@ -27,7 +27,7 @@ local function level_snow(pos, node, depth)
 			if snow_level[node.name][2] - snow_level[temp_node.name][2] > 2 then
 				-- shift the node down till it can be filled
 				if temp_node.name == "air" then
-					while minetest.get_node_or_nil({x=sides[i].x, y=sides[i].y - 1, z=sides[i].z}) ~= nil and 
+					while minetest.get_node_or_nil({x=sides[i].x, y=sides[i].y - 1, z=sides[i].z}) ~= nil and
 							snow_level[minetest.get_node_or_nil({x=sides[i].x, y=sides[i].y - 1, z=sides[i].z}).name] ~= nil do
 						sides[i].y = sides[i].y - 1
 					end
@@ -41,6 +41,23 @@ local function level_snow(pos, node, depth)
 		end
 	end
 	return true
+end
+
+local function is_inside(pos)
+
+	if minetest.get_node_light({x=pos.x,y=pos.y+1,z=pos.z}, 0.5) ~= 15 then
+		return true
+	end
+
+	local temp_node = minetest.get_node_or_nil({x=pos.x,y=pos.y+1,z=pos.z})
+
+	for i = 2,50 do
+		if temp_node ~= nil and temp_node.name ~= "air" then
+			return true
+		end
+		temp_node = minetest.get_node_or_nil({x=pos.x,y=pos.y+i,z=pos.z})
+	end
+	return false
 end
 
 local function get_melt_prob(pos)
@@ -109,7 +126,9 @@ minetest.register_abm({
 				y = pos.y + 1,
 				z = pos.z}, 0.5) == 15 then
 
-					minetest.set_node(pos, {name="mymonths:snow_cover_1"})
+					if not is_inside(ppos) then
+						minetest.set_node(pos, {name="mymonths:snow_cover_1"})
+					end
 			end
 		end
 	end
@@ -149,7 +168,7 @@ minetest.register_abm({
 					minetest.set_node(pos, {name = "mymonths:snow_cover_5"})
 
 				elseif node.name == "mymonths:snow_cover_5" then
-					
+
 					local depth = 2
 
 					local snow_biome = minetest.find_node_near(pos, 5, {"default:ice"})
