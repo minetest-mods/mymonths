@@ -98,10 +98,10 @@ minetest.register_abm({
 		if (mymonths.weather == "snow" or mymonths.weather == "snowstorm")
 		and biome_jungle == nil then
 
-			if minetest.get_node_light(pos, 0.5) == 15
-			and na.name == "air" then
+			if not is_inside(pos) and na.name == "air" then
 
 				minetest.set_node(pos, {name = "mymonths:snow_cover_1"})
+
 			end
 		end
 	end
@@ -121,15 +121,9 @@ minetest.register_abm({
 		if mymonths.weather == "snow" or mymonths.weather == "snowstorm"
 		and biome_jungle == nil then
 
-			if minetest.get_node_light({
-				x = pos.x,
-				y = pos.y + 1,
-				z = pos.z}, 0.5) == 15 then
-
-					if not is_inside(ppos) then
-						minetest.set_node(pos, {name="mymonths:snow_cover_1"})
-					end
-			end
+				if not is_inside(pos) then
+					minetest.set_node(pos, {name="mymonths:snow_cover_1"})
+				end
 		end
 	end
 })
