@@ -27,7 +27,7 @@ local function level_snow(pos, node, depth)
 			if snow_level[node.name][2] - snow_level[temp_node.name][2] > 2 then
 				-- shift the node down till it can be filled
 				if temp_node.name == "air" then
-					while minetest.get_node_or_nil({x=sides[i].x, y=sides[i].y - 1, z=sides[i].z}) ~= nil and 
+					while minetest.get_node_or_nil({x=sides[i].x, y=sides[i].y - 1, z=sides[i].z}) ~= nil and
 							snow_level[minetest.get_node_or_nil({x=sides[i].x, y=sides[i].y - 1, z=sides[i].z}).name] ~= nil do
 						sides[i].y = sides[i].y - 1
 					end
@@ -41,6 +41,40 @@ local function level_snow(pos, node, depth)
 		end
 	end
 	return true
+end
+
+local function is_inside(pos)
+
+	if minetest.get_node_light({x=pos.x,y=pos.y+1,z=pos.z}, 0.5) ~= 15 then
+		return true
+	end
+
+	local temp_node = minetest.get_node_or_nil({x=pos.x,y=pos.y+1,z=pos.z})
+
+	for i = 2,50 do
+		if temp_node ~= nil and temp_node.name ~= "air" then
+			return true
+		end
+		temp_node = minetest.get_node_or_nil({x=pos.x,y=pos.y+i,z=pos.z})
+	end
+	return false
+end
+
+local function get_melt_prob(pos)
+	local list1 = minetest.find_nodes_in_area({x=pos.x-3,y=pos.y-2,z=pos.z-3},
+		{x=pos.x+3,y=pos.y+1,z=pos.z+3},{"default:ice", "default:snowblock"})
+	local list2 = minetest.find_nodes_in_area({x=pos.x-3,y=pos.y-2,z=pos.z-3},
+		{x=pos.x+3,y=pos.y+1,z=pos.z+3},{"mymonths:snow_cover_5",
+		"mymonths:snow_cover_4","mymonths:snow_cover_3","mymonths:snow_cover_2","mymonths:snow_cover_1"})
+	local list3 = minetest.find_nodes_in_area({x=pos.x-3,y=pos.y-2,z=pos.z-3},
+		{x=pos.x+3,y=pos.y+1,z=pos.z+3},{"default:dirt_with_snow", "default:pine_tree"})
+	-- list1 is snow blocks and ice, list 2 is snow cover nodes, list3 is snow dirt and pine trees
+	local count = 2.25 * table.getn(list1) + table.getn(list2) + 2 * table.getn(list3)
+	local prob = 1 - count/196
+	prob = math.max(tonumber(string.format("%.2f", prob * 10)), 0.01)
+	prob = 1 / (prob / 200)
+	prob = math.min(tonumber(string.format("%04d", prob)), 1000)
+	return prob
 end
 
 
@@ -64,10 +98,10 @@ minetest.register_abm({
 		if (mymonths.weather == "snow" or mymonths.weather == "snowstorm")
 		and biome_jungle == nil then
 
-			if minetest.get_node_light(pos, 0.5) == 15
-			and na.name == "air" then
+			if not is_inside(pos) and na.name == "air" then
 
 				minetest.set_node(pos, {name = "mymonths:snow_cover_1"})
+
 			end
 		end
 	end
@@ -87,13 +121,9 @@ minetest.register_abm({
 		if mymonths.weather == "snow" or mymonths.weather == "snowstorm"
 		and biome_jungle == nil then
 
-			if minetest.get_node_light({
-				x = pos.x,
-				y = pos.y + 1,
-				z = pos.z}, 0.5) == 15 then
-
+				if not is_inside(pos) then
 					minetest.set_node(pos, {name="mymonths:snow_cover_1"})
-			end
+				end
 		end
 	end
 })
@@ -132,7 +162,7 @@ minetest.register_abm({
 					minetest.set_node(pos, {name = "mymonths:snow_cover_5"})
 
 				elseif node.name == "mymonths:snow_cover_5" then
-					
+
 					local depth = 2
 
 					local snow_biome = minetest.find_node_near(pos, 5, {"default:ice"})
@@ -172,19 +202,13 @@ minetest.register_abm({
 			return
 		end
 
-		-- check if in a snow biome
-		local snow_biome = minetest.find_node_near(pos, 5, {"default:ice"})
-		if snow_biome ~= nil then
+		local melt_prob = get_melt_prob(pos)
+
+		if melt_prob == 1000 then
 			return
 		end
 
-		-- remove snow if month is april
-		if mymonths.month_counter == 4 then
-			minetest.remove_node(pos)
-			return
-		end
-
-		if math.random(1, 100) == 1 then
+		if math.random(1, melt_prob) == 1 then
 
 			-- check if there is any blocks above it
 			while minetest.get_node_or_nil({x=pos.x, y=pos.y + 1, z=pos.z}) and
