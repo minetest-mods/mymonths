@@ -26,7 +26,7 @@ minetest.register_abm({
 
 		-- return if not march or april
 		if mymonths.month_counter ~= 3
-		or mymonths.month_counter ~= 4 then
+		and mymonths.month_counter ~= 4 then
 			return
 		end
 
