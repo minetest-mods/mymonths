@@ -605,7 +605,7 @@ minetest.register_lbm({
 				or n == 'mymonths:leaves_aspen_blooms'
 				or n == 'default:aspen_leaves' then
 
-					minetest.set_node(pos, {name = 'mymonths:leaves_yellow'})
+					minetest.set_node(pos, {name = 'mymonths:leaves_yellow_aspen'})
 
 				end
 
@@ -684,7 +684,7 @@ minetest.register_lbm({
 				or n == 'mymonths:leaves_aspen_blooms'
 				or n == 'default:aspen_leaves' then
 
-					minetest.set_node(pos, {name = 'mymonths:leaves_red'})
+					minetest.set_node(pos, {name = 'mymonths:leaves_red_aspen'})
 
 				end
 
