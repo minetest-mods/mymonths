@@ -1,7 +1,7 @@
 minetest.register_node("mymonths:fall_grass", {
 	description = "Dirt with Grass",
 	tiles = {"default_grass.png^[colorize:brown:50", "default_dirt.png",
-		{name = "default_dirt.png^default_grass_side.png^[colorize:brown:50",
+		{name = "default_dirt.png^(default_grass_side.png^[colorize:brown:50)",
 			tileable_vertical = false}},
 	groups = {crumbly = 3, soil = 1, spreading_dirt_type = 1},
 	drop = 'default:dirt',
