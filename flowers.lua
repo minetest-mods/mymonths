@@ -59,7 +59,7 @@ minetest.register_abm({
 	chance = 300,
 
 	action = function (pos, node)
-      if node.name == 'default:desert_sand' or node.name == 'default:dirth_with_snow' then
+      if node.name == 'default:desert_sand' or node.name == 'default:dirt_with_snow' then
          return
       end
 
