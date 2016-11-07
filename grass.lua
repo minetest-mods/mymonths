@@ -8,6 +8,11 @@ minetest.register_node("mymonths:fall_grass", {
 	sounds = default.node_sound_dirt_defaults({
 		footstep = {name = "default_grass_footstep", gain = 0.25},
 	}),
+   soil = {
+		base = "default:dirt_with_dry_grass",
+		dry = "farming:soil",
+		wet = "farming:soil_wet"
+	}
 })
 
 minetest.register_abm({

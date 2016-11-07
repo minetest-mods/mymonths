@@ -1,14 +1,50 @@
+minetest.register_node("mymonths:deadplant", {
+	description = "Dead Plant",
+	drawtype = "plantlike",
+	tiles = {"mymonths_deadplant.png"},
+	paramtype = "light",
+	is_ground_content = false,
+	buildable_to = true,
+	sunlight_propagates = true,
+	inventory_image = "mymonths_deadplant.png",
+	visual_scale = 1.2,
+	wield_scale = {x=0.5, y=0.5, z=0.5},
+	groups = {snappy=3, flammable=1, attatched_node=1,},
+	selection_box = {
+		type = "fixed",
+		fixed = {-0.2, -0.5, -0.2, 0.2, -0.1, 0.2}
+	},
+	walkable = false,
+   on_punch = function(pos)
+      leaves_fall(pos)
+   end
+})
 
 -- Flowers die in late fall
 minetest.register_abm({
 	nodenames = {'group:flower'},
-	interval = 10,
-	chance = 10,
+	interval = 60,
+	chance = 100,
 
 	action = function (pos)
 
 		if mymonths.month_counter == 10
 		or mymonths.month_counter == 11 then
+
+			minetest.set_node(pos, {name = 'mymonths:deadplant'})
+		end
+	end
+})
+
+minetest.register_abm({
+	nodenames = {'mymonths:deadplant'},
+	interval = 60,
+	chance = 100,
+
+	action = function (pos)
+
+		if mymonths.month_counter == 12
+		or mymonths.month_counter == 1 then
 
 			minetest.set_node(pos, {name = 'air'})
 		end
@@ -19,11 +55,11 @@ minetest.register_abm({
 -- initial population as that ABM won't grow flowers where there are none.
 minetest.register_abm({
 	nodenames = {'group:soil'},
-	interval = 240,
-	chance = 100,
+	interval = 10,
+	chance = 300,
 
 	action = function (pos, node)
-      if node.name == 'default:desert_sand' then
+      if node.name == 'default:desert_sand' or node.name == 'default:dirth_with_snow' then
          return
       end
 

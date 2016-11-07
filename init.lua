@@ -81,4 +81,6 @@ end
 if mymonths.flowers_die == true then
    dofile(modpath  .. '/pre-flowers.lua')
    dofile(modpath .. "/flowers.lua")
+else
+   minetest.register_alias('mymonths:deadplant', 'air')
 end
