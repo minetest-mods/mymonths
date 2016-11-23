@@ -43,10 +43,11 @@ for i = 1, 4 do
       mesh = 'mymonths_fall_leaves.obj',
       tiles = {'mymonths_fall_leaves_'..i..'.png'},
       inventory_image = 'mymonths_fall_leaves_'..i..'.png',
-      groups = {snappy = 3, flammable = 2, attached_node = 1},
+      groups = {oddly_breakable_by_hand = 1, flammable = 2, attached_node = 1},
       paramtype = 'light',
       walkable = false,
       buildable_to = true,
+	  drop = 'mymonths:fall_leaves_2',
       selection_box = {
          type = "fixed",
 			fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
@@ -61,43 +62,28 @@ function leaves_fall(pos)
    repeat
       local n = minetest.get_node({x = pos.x, y = pos.y - i, z = pos.z})
       if n.name == 'air' then
-         print 'still finding air'
          i = i + 1
-         print ('the value of i is '..i)
       elseif n.name ~= 'air' then
-         print ("found something that isn't air, specifically "..n.name)
-         print ('the value of i is '..i)
          if n.name == 'mymonths:fall_leaves_1' then
-            print 'found fall leaves 1'
             minetest.set_node({x = pos.x, y = pos.y - i, z = pos.z}, {name = 'mymonths:fall_leaves_2'})
             finished = true
-            print ('the value of i is '..i)
          end
          if n.name == 'mymonths:fall_leaves_2' then
-            print 'found fall leaves 2'
             minetest.set_node({x = pos.x, y = pos.y - i, z = pos.z}, {name = 'mymonths:fall_leaves_3'})
             finished = true
-            print ('the value of i is '..i)
          end
          if n.name == 'mymonths:fall_leaves_3' then
-            print 'found fall leaves 3'
             minetest.set_node({x = pos.x, y = pos.y - i, z = pos.z}, {name = 'mymonths:fall_leaves_4'})
             finished = true
-            print ('the value of i is '..i)
          end
          if n.name == 'mymonths:fall_leaves_4' then
-            print 'found fall leaves 4'
             finished = true
-            print ('the value of i is '..i)
          end
          local leaf = minetest.get_node({x = pos.x, y = pos.y - (i - 1), z = pos.z}) -- This is the node above the node that isn't air.
-         print ('this should always be air, but in this case is '..leaf.name)
          if leaf.name == 'air' and finished == false then
-            print 'placing first fall leaves'
             -- Need to check if the node is buildable_to before placing leaves on top of it.
             minetest.set_node({x = pos.x, y = pos.y - (i - 1), z = pos.z}, {name = 'mymonths:fall_leaves_1'})
             finished = true
-            print ('the value of i is '..i)
          end
          i = i + 1
       end
