@@ -43,7 +43,7 @@ for i = 1, 4 do
       mesh = 'mymonths_fall_leaves.obj',
       tiles = {'mymonths_fall_leaves_'..i..'.png'},
       inventory_image = 'mymonths_fall_leaves_'..i..'.png',
-      groups = {oddly_breakable_by_hand = 1, flammable = 2, attached_node = 1},
+      groups = {oddly_breakable_by_hand = 1, flammable = 2, attached_node = 1, fallen_leaves = 1},
       paramtype = 'light',
       walkable = false,
       buildable_to = true,
@@ -81,9 +81,15 @@ function leaves_fall(pos)
          end
          local leaf = minetest.get_node({x = pos.x, y = pos.y - (i - 1), z = pos.z}) -- This is the node above the node that isn't air.
          if leaf.name == 'air' and finished == false then
-            -- Need to check if the node is buildable_to before placing leaves on top of it.
+            local below = minetest.get_node({x = pos.x, y = pos.y - i, z = pos.z})
+            local def = minetest.registered_items[below.name]
+            if def.buildable_to then
+               minetest.set_node({x = pos.x, y = pos.y - i, z = pos.z}, {name = 'mymonths:fall_leaves_1'})
+               finished = true
+            else
             minetest.set_node({x = pos.x, y = pos.y - (i - 1), z = pos.z}, {name = 'mymonths:fall_leaves_1'})
             finished = true
+            end
          end
          i = i + 1
       end
@@ -136,11 +142,8 @@ minetest.register_abm({
    nodenames = {'mymonths:leaves_red', 'mymonths:leaves_red_aspen'},
    interval = 60,
    chance = 40,
-
    action = function (pos, node, active_object_count, active_object_count_wider)
-
       if mymonths.month_counter == 10 then
-
          if node.name == 'mymonths:leaves_red' then
             minetest.set_node(pos, {name = 'mymonths:sticks_default'})
             leaves_fall(pos)
@@ -148,6 +151,18 @@ minetest.register_abm({
             minetest.set_node(pos, {name = 'mymonths:sticks_aspen'})
             leaves_fall(pos)
          end
+      end
+   end
+})
+
+-- Removal of dead leaves from the ground
+minetest.register_abm({
+   nodenames = {'group:fallen_leaves'},
+   interval = 60,
+   chance = 40,
+   action = function (pos, node, active_object_count, active_object_count_wider)
+      if mymonths.month_counter ~= 10 or mymonths.month_counter ~= 11 then
+         minetest.set_node(pos, {name = 'air'})
       end
    end
 })
