@@ -47,13 +47,44 @@ for i = 1, 4 do
       paramtype = 'light',
       walkable = false,
       buildable_to = true,
-	  drop = 'mymonths:fall_leaves_2',
+	   drop = 'mymonths:fall_leaves_2',
       selection_box = {
          type = "fixed",
 			fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
       }
    })
 end
+
+minetest.register_node('mymonths:leaf_pile', {
+   description = 'Pile of leaves',
+   drawtype = 'mesh',
+   mesh = 'mymonths_leaf_pile.obj',
+   tiles = {'mymonths_leaf_pile_uv.png'},
+   inventory_image = 'mymonths_leaf_pile.png',
+   groups = {oddly_breakable_by_hand = 1, flammable = 2, attached_node = 1},
+   paramtype = 'light',
+   walkable = false,
+   buildable_to = true,
+   selection_box = {
+      type = 'fixed',
+      fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
+   }
+})
+
+minetest.register_craft({
+	type = 'fuel',
+	recipe = 'mymonths:leaf_pile',
+	burntime = 4,
+})
+
+minetest.register_craft({
+      output = 'mymonths:leaf_pile',
+      recipe = {
+         {'group:fallen_leaves', 'group:fallen_leaves', 'group:fallen_leaves'},
+         {'group:fallen_leaves', 'group:fallen_leaves', 'group:fallen_leaves'},
+         {'group:fallen_leaves', 'group:fallen_leaves', 'group:fallen_leaves'},
+         }
+})
 
 -- Functions
 function leaves_fall(pos)
@@ -161,8 +192,17 @@ minetest.register_abm({
    interval = 60,
    chance = 40,
    action = function (pos, node, active_object_count, active_object_count_wider)
-      if mymonths.month_counter ~= 10 or mymonths.month_counter ~= 11 then
-         minetest.set_node(pos, {name = 'air'})
+      local month = mymonths.month_counter
+      if month ~= 10 or month ~= 11 then
+         if node.name == 'mymonths:fall_leaves_4' then
+            minetest.set_node(pos, {name = 'mymonths:fall_leaves_3'})
+         elseif node.name == 'mymonths:fall_leaves_3' then
+            minetest.set_node(pos, {name = 'mymonths:fall_leaves_2'})
+         elseif node.name == 'mymonths:fall_leaves_2' then
+            minetest.set_node(pos, {name = 'mymonths:fall_leaves_1'})
+         elseif node.name == 'mymonths:fall_leaves_1' then
+            minetest.set_node(pos, {name = 'air'})
+         end
       end
    end
 })
@@ -258,6 +298,19 @@ minetest.register_abm({
 
       end
 
+   end
+})
+
+-- Fallen Leaves Cleanup LBM
+minetest.register_lbm({
+   name = 'mymonths:rake',
+   nodenames = {'group:fallen_leaves'},
+   run_at_every_load = true,
+   action = function (pos)
+      local month = tonumber(mymonths.month_counter)
+      if month ~= 10 or month ~= 11 or month ~= 12 or month ~= 1 or month ~= 2 then
+         minetest.set_node(pos, {name = 'air'})
+      end
    end
 })
 

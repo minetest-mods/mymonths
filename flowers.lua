@@ -15,9 +15,6 @@ minetest.register_node("mymonths:deadplant", {
 		fixed = {-0.2, -0.5, -0.2, 0.2, -0.1, 0.2}
 	},
 	walkable = false,
-   on_punch = function(pos)
-      leaves_fall(pos)
-   end
 })
 
 -- Flowers die in late fall
@@ -26,12 +23,15 @@ minetest.register_abm({
 	interval = 60,
 	chance = 100,
 
-	action = function (pos)
+	action = function (pos, node)
 
 		if mymonths.month_counter == 10
 		or mymonths.month_counter == 11 then
-
+         if node.name == 'flowers:waterlily' then
+            return
+         else
 			minetest.set_node(pos, {name = 'mymonths:deadplant'})
+         end
 		end
 	end
 })
