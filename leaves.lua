@@ -132,50 +132,41 @@ end
 
 -- Leaves changing in September and October.
 minetest.register_abm({
-   nodenames = {'group:leaves'},
+   label = 'leaf changing-1',
+   nodenames = {'default:leaves', 'mymonths:leaves_pale_green', 'default:aspen_leaves', 'mymonths:leaves_yellow_aspen'},
    interval = 60,
    chance = 40,
-   action = function (pos, node, active_object_count, active_object_count_wider)
+   action = function (pos, node)
 
-      if mymonths.month_counter == 9
-      or mymonths.month_counter == 10 then
+      if mymonths.month_counter == 9 then
 
          if node.name == 'default:leaves' then
-
             minetest.set_node(pos, {name = 'mymonths:leaves_pale_green'})
-
          elseif node.name == 'mymonths:leaves_pale_green' then
-
             minetest.set_node(pos, {name = 'mymonths:leaves_orange'})
-
-         elseif node.name == 'mymonths:leaves_orange' then
-
-            minetest.set_node(pos, {name = 'mymonths:leaves_red'})
-
          elseif node.name == 'default:aspen_leaves' then
-
             minetest.set_node(pos, {name = 'mymonths:leaves_yellow_aspen'})
-
          elseif node.name == 'mymonths:leaves_yellow_aspen' then
-
             minetest.set_node(pos, {name = 'mymonths:leaves_orange_aspen'})
-
-         elseif node.name == 'mymonths:leaves_orange_aspen' then
-
-            minetest.set_node(pos, {name = 'mymonths:leaves_red_aspen'})
          end
       end
    end
 })
 
---leaves 'falling/dying' in October
 minetest.register_abm({
-   nodenames = {'mymonths:leaves_red', 'mymonths:leaves_red_aspen'},
+   label = 'leaf changing-2',
+   nodenames = {'mymonths:leaves_orange', 'mymonths:leaves_orange_aspen', 'mymonths:leaves_red', 'mymonths:leaves_red_aspen'},
    interval = 60,
    chance = 40,
-   action = function (pos, node, active_object_count, active_object_count_wider)
+   action = function (pos, node)
+
       if mymonths.month_counter == 10 then
-         if node.name == 'mymonths:leaves_red' then
+
+         if node.name == 'mymonths:leaves_orange' then
+            minetest.set_node(pos, {name = 'mymonths:leaves_red'})
+         elseif node.name == 'mymonths:leaves_orange_aspen' then
+            minetest.set_node(pos, {name = 'mymonths:leaves_red_aspen'})
+         elseif node.name == 'mymonths:leaves_red' then
             minetest.set_node(pos, {name = 'mymonths:sticks_default'})
             leaves_fall(pos)
          elseif node.name == 'mymonths:leaves_red_aspen' then
@@ -191,7 +182,7 @@ minetest.register_abm({
    nodenames = {'group:fallen_leaves'},
    interval = 60,
    chance = 40,
-   action = function (pos, node, active_object_count, active_object_count_wider)
+   action = function (pos, node)
       local month = mymonths.month_counter
       if month ~= 10 or month ~= 11 then
          if node.name == 'mymonths:fall_leaves_4' then
@@ -213,25 +204,18 @@ minetest.register_abm({
    interval = 60,
    chance = 40,
 
-   action = function (pos, node, active_object_count, active_object_count_wider)
+   action = function (pos, node)
 
       if mymonths.month_counter == 3
       or mymonths.month_counter == 4 then
 
          if node.name == 'mymonths:sticks_default' then
-
             minetest.set_node(pos, {name = 'mymonths:leaves_blooms'})
-
          elseif node.name == 'mymonths:leaves_blooms' then
-
             minetest.set_node(pos, {name = 'default:leaves'})
-
          elseif node.name == 'mymonths:sticks_aspen' then
-
             minetest.set_node(pos, {name = 'mymonths:leaves_aspen_blooms'})
-
          elseif node.name == 'mymonths:leaves_aspen_blooms' then
-
             minetest.set_node(pos, {name = 'default:aspen_leaves'})
          end
       end

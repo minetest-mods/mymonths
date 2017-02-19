@@ -87,8 +87,8 @@ minetest.register_abm({
    interval = 8,
    chance = 20,
 
-   action = function (pos, node)z
-      if (mymonths.weather == "snow" or mymonths.weather == "snowstorm") then
+   action = function (pos, node)
+      if mymonths.weather == "snow" or mymonths.weather == "snowstorm" then
          local biome_jungle = minetest.find_node_near(pos, 5, "default:jungletree", "default:junglegrass")
          pos.y = pos.y + 1 -- check above node
          local na = minetest.get_node(pos)
@@ -98,6 +98,7 @@ minetest.register_abm({
             end
          end
       end
+   end
 })
 
 --Replace grass and flowers with snow
@@ -116,6 +117,7 @@ minetest.register_abm({
          end
       end
    end
+end
 })
 
 -- Changes snow to larger snow
