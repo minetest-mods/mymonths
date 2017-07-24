@@ -21,3 +21,7 @@ mymonths.snow_on_ground = true
 --Puddles appear when raining
 
 mymonths.use_puddles = true
+
+--Set custom speed of time
+
+mymonths.timescale = 72
