@@ -1,8 +1,11 @@
 local timechange = 0
 local gm = 0
 local gn = 0
--- TODO should be read from configuration file
 local timescale = 72
+-- If exists read timescale from config and store locally to prevent outside modification
+if mymonths.timescale ~= nil then
+	timescale = mymonths.timescale
+end	
 
 -- Set holidays
 local hol = {
