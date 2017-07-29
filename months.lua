@@ -1,6 +1,11 @@
 local timechange = 0
 local gm = 0
 local gn = 0
+local timescale = 72
+-- If exists read timescale from config and store locally to prevent outside modification
+if mymonths.timescale ~= nil then
+	timescale = mymonths.timescale
+end	
 
 -- Set holidays
 local hol = {
@@ -63,8 +68,8 @@ minetest.register_globalstep(function(dtime)
 	local mc = tonumber(mymonths.month_counter)
 	local x = ((mc-1)*14)+dc
 	local ratio = ((math.cos((x / 168) * 2 * math.pi) * 0.8) / 2.0) + 0.5
-	local nightratio = math.floor(72*(ratio+0.5))
-	local dayratio =  math.floor(72/(ratio+0.5))
+	local nightratio = math.floor(timescale * (ratio + 0.5))
+	local dayratio =  math.floor(timescale / (ratio + 0.5))
 
 	--Checks for morning
 	local time_in_seconds = minetest.get_timeofday() * 24000
