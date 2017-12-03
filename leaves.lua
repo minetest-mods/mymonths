@@ -590,7 +590,7 @@ minetest.register_lbm({
 
       end
 
--- Augest
+-- August
       if month == 8 then
 
          -- Default Leaves
