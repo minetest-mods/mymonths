@@ -3,7 +3,7 @@ local function is_inside(pos)
 	if minetest.get_node_light({x=pos.x,y=pos.y+1,z=pos.z}, 0.5) ~= 15 then
 		return true
 	end
-	
+
 	local temp_node = minetest.get_node_or_nil({x=pos.x,y=pos.y+1,z=pos.z})
 
 	for i = 2,50 do
@@ -30,8 +30,8 @@ minetest.register_globalstep(function(dtime)
 	end
 
 	t = 0
-	
-	if minetest.get_modpath("lightning") then 
+
+	if minetest.get_modpath("lightning") then
 		if mymonths.weather == "storm" then
 		lightning.strike()
 		end
@@ -222,11 +222,11 @@ mymonths.active_particlespawners={}
 --used to determine if to remove old and add new particle spawners
 mymonths.last_weather2="none"
 function mymonths.update_weather_particles(player)
-	
+
 	mymonths.remove_weather_particles(player)
-	
+
 	local name=player:get_player_name()
-	
+
 	local minp = {x = -20, y = 7, z = -20}
 	local maxp = {x = 20, y = 7, z = 20}
 	local minps = {x =-20, y = 0, z = -20}
@@ -239,9 +239,9 @@ function mymonths.update_weather_particles(player)
 	local acc_snow = {x = 0, y = -0.5, z = 0}
 	local vel_sand = {x = 1, y = -0.1, z = 0}
 	local acc_sand = {x = 2, y = 0, z = 0}
-	
+
 	local l={}
-	
+
 	if mymonths.weather2 == "storm" then
 
 		l[1] = minetest.add_particlespawner({
@@ -280,7 +280,7 @@ function mymonths.update_weather_particles(player)
 			minsize = 25,
 			maxsize = 25,
 			collisiondetection = false,
-			vertical = true, 
+			vertical = true,
 			texture = "weather_rain.png",
 			playername = name,
 			attached = player
@@ -442,12 +442,12 @@ minetest.register_globalstep(function(dtime)
 
 	for _, player in ipairs(minetest.get_connected_players()) do
 
-		local ppos = player:getpos()
+		local ppos = player:get_pos()
 		local hp = player:get_hp()
 		local name = player:get_player_name()
 		local nodein = minetest.get_node(ppos)
 		local nodeu = minetest.get_node({x = ppos.x, y = ppos.y - 1, z = ppos.z})
-		
+
 		local biome_jungle = minetest.find_node_near(ppos, 8, "default:jungletree", "default:junglegrass")
 		local biome_desert = minetest.find_node_near(ppos, 8, "default:desert_sand", "default:desert_stone")
 		local biome_snow = minetest.find_node_near(ppos, 8, "default:snow", "default:snowblock", "default:dirt_with_snow",
@@ -531,12 +531,12 @@ minetest.register_globalstep(function(dtime)
 		else
 			mymonths.weather2 = mymonths.weather
 		end
-		
+
 		if mymonths.weather2 ~= mymonths.last_weather2 then
 			mymonths.update_weather_particles(player)
 			mymonths.last_weather2 = mymonths.weather2
 		end
-	
+
 		if mymonths.weather2 == "storm" then
 
 			if not is_inside(ppos) and mymonths.damage == true then
@@ -597,7 +597,7 @@ minetest.register_globalstep(function(dtime)
 
 	for _, player in ipairs(minetest.get_connected_players()) do
 
-		local ppos = player:getpos()
+		local ppos = player:get_pos()
 
 		t2 = t2 + dtime
 
