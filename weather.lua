@@ -42,7 +42,7 @@ minetest.register_globalstep(function(dtime)
 		if math.random(1, 100) == 1 then
 
 			mymonths.weather = "clear"
-			minetest.chat_send_all("Clear skys!")
+			minetest.chat_send_all("Clear skies!")
 		end
 	else
 
