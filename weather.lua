@@ -1,20 +1,3 @@
-local function is_inside(pos)
-
-	if minetest.get_node_light({x=pos.x,y=pos.y+1,z=pos.z}, 0.5) ~= 15 then
-		return true
-	end
-
-	local temp_node = minetest.get_node_or_nil({x=pos.x,y=pos.y+1,z=pos.z})
-
-	for i = 2,50 do
-		if temp_node ~= nil and temp_node.name ~= "air" then
-			return true
-		end
-		temp_node = minetest.get_node_or_nil({x=pos.x,y=pos.y+i,z=pos.z})
-	end
-	return false
-end
-
 
 --Sets the weather types for each month
 local t = 0
@@ -30,8 +13,8 @@ minetest.register_globalstep(function(dtime)
 	end
 
 	t = 0
-
-	if minetest.get_modpath("lightning") then
+	
+	if minetest.get_modpath("lightning") then 
 		if mymonths.weather == "storm" then
 		lightning.strike()
 		end
@@ -42,7 +25,7 @@ minetest.register_globalstep(function(dtime)
 		if math.random(1, 100) == 1 then
 
 			mymonths.weather = "clear"
-			minetest.chat_send_all("Clear skies!")
+			minetest.chat_send_all("Clear skys!")
 		end
 	else
 
@@ -207,229 +190,6 @@ end
 
 hp_t = 0
 
---structure:
---[[
-active_particlespawners = {
-	[player_name] = {
-		pSpawnerId1,
-		pSpawnerId2,
-		...
-		pSpawnerIdn
-	}
-}
-]]--
-mymonths.active_particlespawners={}
---used to determine if to remove old and add new particle spawners
-mymonths.last_weather2="none"
-function mymonths.update_weather_particles(player)
-
-	mymonths.remove_weather_particles(player)
-
-	local name=player:get_player_name()
-
-	local minp = {x = -20, y = 7, z = -20}
-	local maxp = {x = 20, y = 7, z = 20}
-	local minps = {x =-20, y = 0, z = -20}
-	local maxps = {x = 20, y = 3, z = 20}
-	local minp_deep = {x = -20, y = 3.2, z = -20}
-	local maxp_deep = {x = 20, y = 2.6, z = 20}
-	local vel_rain = {x = 0, y = -4, z = 0}
-	local acc_rain = {x = 0, y = -9.81, z = 0}
-	local vel_snow = {x = 0, y = -0.4, z = 0}
-	local acc_snow = {x = 0, y = -0.5, z = 0}
-	local vel_sand = {x = 1, y = -0.1, z = 0}
-	local acc_sand = {x = 2, y = 0, z = 0}
-
-	local l={}
-
-	if mymonths.weather2 == "storm" then
-
-		l[1] = minetest.add_particlespawner({
-			amount = 4000,
-			time = 0,
-			minpos = minp,
-			maxpos = maxp,
-			minvel = vel_rain,
-			maxvel = vel_rain,
-			minacc = acc_rain,
-			maxacc = acc_rain,
-			minexptime = 0.8,
-			maxexptime = 0.8,
-			minsize = 25,
-			maxsize = 40,
-			collisiondetection = false,
-			vertical = true,
-			texture = "weather_rain_dark.png",
-			playername = name,
-			attached = player
-		})
-
-	elseif mymonths.weather2 == "rain" then
-
-		l[1] = minetest.add_particlespawner({
-			amount = 1500,
-			time = 0,
-			minpos = minp,
-			maxpos = maxp,
-			minvel = vel_rain,
-			maxvel = vel_rain,
-			minacc = acc_rain,
-			maxacc = acc_rain,
-			minexptime = 0.6,
-			maxexptime = 0.8,
-			minsize = 25,
-			maxsize = 25,
-			collisiondetection = false,
-			vertical = true,
-			texture = "weather_rain.png",
-			playername = name,
-			attached = player
-		})
-
-	elseif mymonths.weather2 == "snow" then
-
-		l[1] = minetest.add_particlespawner({
-			amount = 400,
-			time = 0,
-			minpos = minp,
-			maxpos = maxp,
-			minvel = vel_snow,
-			maxvel = vel_snow,
-			minacc = acc_snow,
-			maxacc = acc_snow,
-			minexptime = 4,
-			maxexptime = 8,
-			minsize = 15,
-			maxsize = 25,
-			collisiondetection = false,
-			vertical = true,
-			texture = "weather_snow.png",
-			playername = name,
-			attached = player
-		})
-
-		l[2] = minetest.add_particlespawner({
-			amount = 400,
-			time = 0,
-			minpos = minp_deep,
-			maxpos = maxp_deep,
-			minvel = vel_snow,
-			maxvel = vel_snow,
-			minacc = acc_snow,
-			maxacc = acc_snow,
-			minexptime = 4,
-			maxexptime = 6,
-			minesize = 15,
-			maxsize = 25,
-			collisiondetection = false,
-			vertical = true,
-			texture = "weather_snow.png",
-			playername = name,
-			attached = player
-		})
-
-	elseif mymonths.weather2 == "snowstorm" then
-
-		l[1] = minetest.add_particlespawner({
-			amount = 2500,
-			time = 0,
-			minpos = minp,
-			maxpos = maxp,
-			minvel = vel_snow,
-			maxvel = vel_snow,
-			minacc = acc_snow,
-			maxacc = acc_snow,
-			minexptime = 4,
-			maxexptime = 6,
-			minesize = 15,
-			maxsize = 35,
-			collisiondetection = false,
-			vertical = true,
-			texture = "weather_snow.png",
-			playername = name,
-			attached = player
-		})
-
-		l[2] = minetest.add_particlespawner({
-			amount = 2500,
-			time = 0,
-			minpos = minp_deep,
-			maxpos = maxp_deep,
-			minvel = vel_snow,
-			maxvel = vel_snow,
-			minacc = acc_snow,
-			maxacc = acc_snow,
-			minexptime = 4,
-			maxexptime = 6,
-			minesize = 15,
-			maxsize = 25,
-			collisiondetection = false,
-			vertical = true,
-			texture = "weather_snow.png",
-			playername = name,
-			attached = player
-		})
-
-	elseif mymonths.weather2 == "sandstorm" then
-
-		l[1] = minetest.add_particlespawner({
-			amount = 3500,
-			time = 0,
-			minpos = minps,
-			maxpos = maxps,
-			minvel = vel_sand,
-			maxvel = vel_sand,
-			minacc = acc_sand,
-			maxacc = acc_sand,
-			minexptime = 4,
-			maxexptime = 4,
-			minesize = 5,
-			maxsize = 10,
-			collisiondetection = false,
-			vertical = true,
-			texture = "weather_sand.png",
-			playername = name,
-			attached = player
-		})
-
-	elseif mymonths.weather2 == "hail" then
-
-		l[1] = minetest.add_particlespawner({
-			amount = 3500,
-			time = 0,
-			minpos = minp,
-			maxpos = maxp,
-			minvel = vel_rain,
-			maxvel = vel_rain,
-			minacc = acc_rain,
-			maxacc = acc_rain,
-			minexptime = 1,
-			maxexptime = 1,
-			minesize = 5,
-			maxsize = 10,
-			collisiondetection = true,
-			vertical = true,
-			texture = "weather_hail.png",
-			playername = name,
-			attached = player
-		})
-	end
-	mymonths.active_particlespawners[name]=l
-end
-function mymonths.remove_weather_particles(player)
-	local pname=player:get_player_name()
-	if not mymonths.active_particlespawners[pname] then return end
-	for _,pid in ipairs(mymonths.active_particlespawners[pname]) do
-		minetest.delete_particlespawner(pid)
-	end
-	mymonths.active_particlespawners[pname]={}
-end
-minetest.register_on_joinplayer(function()
-	--enforce weather particle re-initialization on next step
-	mymonths.last_weather2=""
-end)
-
-
 minetest.register_globalstep(function(dtime)
 
 	hp_t = hp_t + dtime
@@ -442,48 +202,67 @@ minetest.register_globalstep(function(dtime)
 
 	for _, player in ipairs(minetest.get_connected_players()) do
 
-		local ppos = player:get_pos()
+		local ppos = player:getpos()
 		local hp = player:get_hp()
 		local name = player:get_player_name()
 		local nodein = minetest.get_node(ppos)
 		local nodeu = minetest.get_node({x = ppos.x, y = ppos.y - 1, z = ppos.z})
-
-		local biome_jungle = minetest.find_node_near(ppos, 8, "default:jungletree", "default:junglegrass")
-		local biome_desert = minetest.find_node_near(ppos, 8, "default:desert_sand", "default:desert_stone")
-		local biome_snow = minetest.find_node_near(ppos, 8, "default:snow", "default:snowblock", "default:dirt_with_snow",
-					 "default:ice", "default:pine_tree", "mymonths:snow_cover_5")
+		
+		local biome_jungle = minetest.find_node_near(ppos, 5, "default:jungletree", "default:junglegrass")
+		local biome_desert = minetest.find_node_near(ppos, 5, "default:desert_sand", "default:desert_stone","default:sand","default:silver_sand")
+		local biome_snow = minetest.find_node_near(ppos, 5, "default:snow", "default:snowblock", "default:dirt_with_snow", "default:ice")
+		local biome_frost = minetest.find_node_near(ppos, 5, "default:permafrost_with_stone", "default:permafrost_with_moss", "default:gravel", "default:snow")
+		local biome_coniferous = minetest.find_node_near(ppos, 5, "default:dirt_with_coniferous_litter")
+		local biome_dry_land = minetest.find_node_near(ppos, 5, "default:dry_dirt", "default:dry_dirt_with_dry_grass")
+		
+		local minp = addvectors(ppos, {x = -10, y = 7, z = -10})
+		local maxp = addvectors(ppos, {x = 10, y = 7, z = 10})
+		local minps = addvectors(ppos, {x =-15, y = 0, z = -10})
+		local maxps = addvectors(ppos, {x = 5, y = 3, z = 10})
+		local minp_deep = addvectors(ppos, {x = -10, y = 3.2, z = -10})
+		local maxp_deep = addvectors(ppos, {x = 10, y = 2.6, z = 10})
+		local vel_rain = {x = 0, y = -4, z = 0}
+		local acc_rain = {x = 0, y = -9.81, z = 0}
+		local vel_snow = {x = 0, y = -0.4, z = 0}
+		local acc_snow = {x = 0, y = -0.5, z = 0}
+		local vel_sand = {x = 1, y = -0.1, z = 0}
+		local acc_sand = {x = 2, y = 0, z = 0}
 
 		-- slows players walk in snow
 		if nodein.name == "mymonths:snow_cover_1" then
 
-			player:set_physics_override(0.95, 1, 1, true, false)
+			player:set_physics_override({0.95, 1, 1, true, false})
 
 		elseif nodein.name == "mymonths:snow_cover_2" then
 
-			player:set_physics_override(0.8, 1, 1, true, false)
+			player:set_physics_override({0.8, 1, 1, true, false})
 
 		elseif nodein.name == "mymonths:snow_cover_3" then
 
-			player:set_physics_override(0.65, 1, 1, true, false)
+			player:set_physics_override({0.65, 1, 1, true, false})
 
 		elseif nodein.name == "mymonths:snow_cover_4" then
 
-			player:set_physics_override(0.5, 1, 1, true, false)
+			player:set_physics_override({0.5, 1, 1, true, false})
 
 		elseif nodein.name == "mymonths:snow_cover_5" then
 
-			player:set_physics_override(0.35, 1, 1, true, false)
+			player:set_physics_override({0.35, 1, 1, true, false})
 		else
-			player:set_physics_override(1, 1, 1, true, false)
+			player:set_physics_override({1, 1, 1, true, false})
+		end
+
+		-- check light to make sure player is outside
+		if minetest.get_node_light({
+			x = ppos.x,
+			y = ppos.y + 1,
+			z = ppos.z}, 0.5) ~= 15 then
+
+			return
 		end
 
 		-- checks if there is any weather
 		if mymonths.weather2 == "none" then
-			return
-		end
-
-		-- check light to make sure player is outside
-		if is_inside(ppos) then
 			return
 		end
 
@@ -528,18 +307,82 @@ minetest.register_globalstep(function(dtime)
 
 				mymonths.weather2 = "snowstorm"
 			end
-		else
-			mymonths.weather2 = mymonths.weather
-		end
+			
+					
+		-- Permafrost
+		elseif biome_frost ~= nil then
 
-		if mymonths.weather2 ~= mymonths.last_weather2 then
-			mymonths.update_weather_particles(player)
-			mymonths.last_weather2 = mymonths.weather2
-		end
+			if mymonths.weather == "snow"
+			or mymonths.weather == "rain" then
 
+				mymonths.weather2 = "clear"
+
+			elseif mymonths.weather == "snowstorm"
+			or mymonths.weather == "hail"
+			or mymonths.weather == "storm" then
+
+				mymonths.weather2 = "snow"
+			end
+			
+		-- Coniferous
+		elseif biome_coniferous ~= nil then
+
+			if mymonths.weather == "snow"
+			or mymonths.weather == "rain" then
+
+				mymonths.weather2 = "clear"
+
+			elseif mymonths.weather == "snowstorm"
+			or mymonths.weather == "hail"
+			or mymonths.weather == "storm" then
+
+				mymonths.weather2 = "rain"
+			end	
+				
+		-- Dry Land
+		elseif biome_dry_land ~= nil then
+
+			if mymonths.weather == "snow"
+			or mymonths.weather == "rain" then
+
+				mymonths.weather2 = "clear"
+
+			elseif mymonths.weather == "snowstorm"
+			or mymonths.weather == "hail"
+			or mymonths.weather == "storm" then
+
+				mymonths.weather2 = "sandstorm"
+			end
+		
+		elseif
+			mymonths.weather2 == mymonths.weather then
+		end
 		if mymonths.weather2 == "storm" then
 
-			if not is_inside(ppos) and mymonths.damage == true then
+			minetest.add_particlespawner({
+				amount = 40,
+				time = 0.5,
+				minpos = minp,
+				maxpos = maxp,
+				minvel = vel_rain,
+				maxvel = vel_rain,
+				minacc = acc_rain,
+				maxacc = acc_rain,
+				minexptime = 0.8,
+				maxexptime = 0.8,
+				minsize = 25,
+				maxsize = 40,
+				collisiondetection = false,
+				vertical = true,
+				texture = "weather_rain_dark.png",
+				playername = name
+			})
+
+			if minetest.get_node_light({
+				x = ppos.x,
+				y = ppos.y + 1,
+				z = ppos.z}, 0.5) == 15
+			and mymonths.damage == true then
 
 				if hp_t >= 15 then
 					player:set_hp(hp - 1)
@@ -556,9 +399,113 @@ minetest.register_globalstep(function(dtime)
 				})
 			end
 
+		elseif mymonths.weather2 == "rain" then
+
+			minetest.add_particlespawner({
+				amount = 15,
+				time = 0.5,
+				minpos = minp,
+				maxpos = maxp,
+				minvel = vel_rain,
+				maxvel = vel_rain,
+				minacc = acc_rain,
+				maxacc = acc_rain,
+				minexptime = 0.6,
+				maxexptime = 0.8,
+				minsize = 25,
+				maxsize = 25,
+				collisiondetection = false,
+				vertical = true, 
+				texture = "weather_rain.png",
+				playername = name
+			})
+
+		elseif mymonths.weather2 == "snow" then
+
+			minetest.add_particlespawner({
+				amount = 4,
+				time = 0.5,
+				minpos = minp,
+				maxpos = maxp,
+				minvel = vel_snow,
+				maxvel = vel_snow,
+				minacc = acc_snow,
+				maxacc = acc_snow,
+				minexptime = 4,
+				maxexptime = 8,
+				minsize = 15,
+				maxsize = 25,
+				collisiondetection = false,
+				vertical = true,
+				texture = "weather_snow.png",
+				playername = name
+			})
+
+			minetest.add_particlespawner({
+				amount = 4,
+				time = 0.5,
+				minpos = minp_deep,
+				maxpos = maxp_deep,
+				minvel = vel_snow,
+				maxvel = vel_snow,
+				minacc = acc_snow,
+				maxacc = acc_snow,
+				minexptime = 4,
+				maxexptime = 6,
+				minesize = 15,
+				maxsize = 25,
+				collisiondetection = false,
+				vertical = true,
+				texture = "weather_snow.png",
+				playername = name
+			})
+
 		elseif mymonths.weather2 == "snowstorm" then
 
-			if not is_inside(ppos) and mymonths.damage == true then
+			minetest.add_particlespawner({
+				amount = 25,
+				time = 0.5,
+				minpos = minp,
+				maxpos = maxp,
+				minvel = vel_snow,
+				maxvel = vel_snow,
+				minacc = acc_snow,
+				maxacc = acc_snow,
+				minexptime = 4,
+				maxexptime = 6,
+				minesize = 15,
+				maxsize = 35,
+				collisiondetection = false,
+				vertical = true,
+				texture = "weather_snow.png",
+				playername = name
+			})
+
+			minetest.add_particlespawner({
+				amount = 25,
+				time = 0.5,
+				minpos = minp_deep,
+				maxpos = maxp_deep,
+				minvel = vel_snow,
+				maxvel = vel_snow,
+				minacc = acc_snow,
+				maxacc = acc_snow,
+				minexptime = 4,
+				maxexptime = 6,
+				minesize = 15,
+				maxsize = 25,
+				collisiondetection = false,
+				vertical = true,
+				texture = "weather_snow.png",
+				playername = name
+			})
+
+			if minetest.get_node_light({
+				x = ppos.x,
+				y = ppos.y + 1,
+				z =ppos.z}, 0.5) == 15
+			and mymonths.damage == true then
+
 				if hp_t >= 15 then
 					player:set_hp(hp - 1)
 					hp_t = 0
@@ -567,7 +514,31 @@ minetest.register_globalstep(function(dtime)
 
 		elseif mymonths.weather2 == "sandstorm" then
 
-			if not is_inside(ppos) and mymonths.damage == true then
+			minetest.add_particlespawner({
+				amount = 35,
+				time = 0.5,
+				minpos = minps,
+				maxpos = maxps,
+				minvel = vel_sand,
+				maxvel = vel_sand,
+				minacc = acc_sand,
+				maxacc = acc_sand,
+				minexptime = 4,
+				maxexptime = 4,
+				minesize = 5,
+				maxsize = 10,
+				collisiondetection = false,
+				vertical = true,
+				texture = "weather_sand.png",
+				playername = name
+			})
+
+			if minetest.get_node_light({
+				x = ppos.x,
+				y = ppos.y + 1,
+				z = ppos.z}, 0.5) == 15
+			and mymonths.damage == true then
+
 				if hp_t >= 15 then
 					player:set_hp(hp - 1)
 					hp_t = 0
@@ -576,20 +547,46 @@ minetest.register_globalstep(function(dtime)
 
 		elseif mymonths.weather2 == "hail" then
 
-			if not is_inside(ppos) and mymonths.damage == true then
+			minetest.add_particlespawner({
+				amount = 35,
+				time = 0.5,
+				minpos = minp,
+				maxpos = maxp,
+				minvel = vel_rain,
+				maxvel = vel_rain,
+				minacc = acc_rain,
+				maxacc = acc_rain,
+				minexptime = 1,
+				maxexptime = 1,
+				minesize = 5,
+				maxsize = 10,
+				collisiondetection = true,
+				vertical = true,
+				texture = "weather_hail.png",
+				playername = name
+			})
+
+			if minetest.get_node_light({
+				x = ppos.x,
+				y = ppos.y + 1,
+				z = ppos.z}, 0.5) == 15
+			and mymonths.damage == true then
+
 				if hp_t >= 15 then
 					player:set_hp(hp - 1)
 					hp_t = 0
 				end
 			end
-		end
 
 		biome_jungle = nil
 		biome_snow = nil
 		biome_desert = nil
+		biome_frost = nil
 
 	end
-end)
+end
+end
+)
 
 local t2 = 0
 
@@ -597,7 +594,7 @@ minetest.register_globalstep(function(dtime)
 
 	for _, player in ipairs(minetest.get_connected_players()) do
 
-		local ppos = player:get_pos()
+		local ppos = player:getpos()
 
 		t2 = t2 + dtime
 
