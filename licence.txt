@@ -22,3 +22,9 @@ THE SOFTWARE.
 
 
 Media by Don Michaud (CC0) unless listed below
+
+- Textures:
+  - Snow cover: CC0
+  - Rain / Snow: CC-BY-SA 3.0, credit goes to TeddyDesTodes, from his weather branch at https://github.com/TeddyDesTodes/minetest/tree/weather
+- Sound Effects:
+  - mymonths_rain & mymonths_rain1: CC0 by Q.K.
