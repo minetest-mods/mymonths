@@ -7,9 +7,9 @@ The rain and snow code comes from the weather mod
 from topic - https://forum.minetest.net/viewtopic.php?t=5245
 by Jeija
 
-- Code: LGPL
+- Code: MIT
 - Textures:
-  - Snow cover: WTFPL
+  - Snow cover: CC0
   - Rain / Snow: CC-BY-SA 3.0, credit goes to TeddyDesTodes, from his weather branch at https://github.com/TeddyDesTodes/minetest/tree/weather
 - Sound Effects:
   - mymonths_rain & mymonths_rain1: CC0 by Q.K.
