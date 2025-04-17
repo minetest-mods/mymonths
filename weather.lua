@@ -627,6 +627,7 @@ local puddle_box = {
 }
 
 minetest.register_node("mymonths:puddle", {
+	description = "Puddle",
 	tiles = {"weather_puddle.png"},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -654,6 +655,7 @@ for i in ipairs(snow) do
 	local box = snow[i][3]
 
 	minetest.register_node(itm, {
+		description = "Snow",
 		tiles = {"weather_snow_cover.png"},
 		drawtype = "nodebox",
 		paramtype = "light",

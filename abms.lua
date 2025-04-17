@@ -82,7 +82,7 @@ end
 if mymonths.snow_on_ground == true then
 
 minetest.register_abm({
-   nodenames = {"group:leaves", "group:soil", "default:snowblock"},
+   nodenames = {"group:leaves", "group:soil", "default:snowblock", "group:asphalt", "group:concrete"},
    neighbors = {"air"},
    interval = 8,
    chance = 20,
