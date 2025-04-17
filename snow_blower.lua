@@ -58,3 +58,13 @@ end
 end
 end
 })
+
+--Craft
+minetest.register_craft({
+	output = "myores:slate_tile 4",
+	recipe = {
+    		{"default:steel_ingot","",""},
+			{"","default:copper_ingot","default:steel_ingot"},
+			{"","default:steel_ingot","default:steel_ingot"},
+	}
+})
