@@ -1,0 +1,17 @@
+#Enable for Weather
+mymonths.use_weather(Enable to have weather) bool true
+
+#Enable for Damage
+mymonths.use_damage(Enable for weather to cause damage) bool false
+
+#Enable for leaves to change
+mymonths.use_leaves(Enable for leaves to change color) bool true
+
+#Enable for snow on ground
+mymonths.use_snow(Enable for snow to happen) bool true
+
+#Enable for puddles
+mymonths.use_puddles(Enable for puddles to happen) bool true
+
+#Enable for flowers to die
+mymonths.use_flowers(Enable for flowers to die in the fall) bool true

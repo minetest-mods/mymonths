@@ -49,11 +49,11 @@ return false
 end
 for _, check_pos in ipairs(nodes_to_check) do
 local node = minetest.get_node(check_pos)
-minetest.chat_send_all("Checking node at: " .. minetest.pos_to_string(check_pos) .. " - Name: " .. node.name)
+--minetest.chat_send_all("Checking node at: " .. minetest.pos_to_string(check_pos) .. " - Name: " .. node.name)
 
 if node and node.name and table_contains(snow_nodes, node.name) then
 minetest.remove_node(check_pos)
-minetest.chat_send_all("Removed snow node at: " .. minetest.pos_to_string(check_pos))
+--minetest.chat_send_all("Removed snow node at: " .. minetest.pos_to_string(check_pos))
 end
 end
 end
