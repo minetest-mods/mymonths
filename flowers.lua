@@ -73,16 +73,16 @@ minetest.register_abm({
 		local pos1 = {x = pos.x + 4, y = pos.y + 2, z = pos.z + 4}
 		local flowers = minetest.find_nodes_in_area(pos0, pos1, "group:flower")
 
-		if #flowers > 1 then
+		if #flowers < 1 then
 			return
 		end
 
 		pos.y = pos.y + 1
 
 		if minetest.get_node(pos).name == 'air' then
-         local key = math.random(1, mymonths.flower_number)
+        local key = math.random(1, mymonths.flower_number)
          local placed_flower = mymonths.flowers[key]
-         minetest.set_node(pos, {name = placed_flower})
+         	minetest.set_node(pos, {name = placed_flower})
 		end
 	end
 })
