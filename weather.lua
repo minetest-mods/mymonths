@@ -669,7 +669,7 @@ for i in ipairs(snow) do
 			type  = "fixed",
 			fixed = {-0.5, -0.5, -0.5, 0.5, box, 0.5}
 		},
-		groups = {not_in_creative_inventory = 0, crumbly = 3, attached_node = 0, falling_node = 1},
+		groups = {not_in_creative_inventory = 0, crumbly = 3, attached_node = 0, falling_node = 1, snowy = 1},
 		drop = "default:snow " .. num,
 	})
 end
